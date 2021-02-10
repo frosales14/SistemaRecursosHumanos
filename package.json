@@ -15,5 +15,9 @@
     "bugs": {
         "url": "https://github.com/frosales14/SistemaRecursosHumanos/issues"
     },
-    "homepage": "https://github.com/frosales14/SistemaRecursosHumanos#readme"
+    "homepage": "https://github.com/frosales14/SistemaRecursosHumanos#readme",
+    "dependencies": {
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.7"
+    }
 }

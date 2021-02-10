@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://database-comex",
+            "request": "launch",
+            "url": "http://database-comex"
+        }
+    ]
+}
