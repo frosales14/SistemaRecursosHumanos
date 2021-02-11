@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 
 //IMPORTAR VARIABLES DE ENTORNO
@@ -18,49 +18,47 @@ const connection = mysql.createConnection({
     database: process.env.DATABASE,
     port: process.env.PORT,
 });
- 
-connection.connect(err => {
-  if (err) {
-      console.log(`${err} - Not Connected to MySQL`);
-      return err;
-  } else {
-      console.log('Connected to MySQL');
-  }
+
+connection.connect((err) => {
+    if (err) {
+        console.log(`${err} - Not Connected to MySQL`);
+        return err;
+    } else {
+        console.log('Connected to MySQL');
+    }
 });
 
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send("Hello World");
+    res.send('Hello World');
 });
 
 app.get('/users', (req, res) => {
-  connection.query(SELECT_ALL_USERS_QUERY, (err, results) => {
-      if (err) {
-          return res.send(err);
-      } else {
-          return res.json({
-              data: results
-          });
-      }
-  });
+    connection.query(SELECT_ALL_USERS_QUERY, (err, results) => {
+        if (err) {
+            return res.send(err);
+        } else {
+            return res.json({
+                data: results,
+            });
+        }
+    });
 });
 
 app.get('/users/add', (req, res) => {
-  const { usuario, contrasena } = req.query;
-  console.log(req.query)
-  const INSERT_USERS_QUERY = `INSERT INTO administrador (usuario,contrasena) VALUES ('${usuario}', '${contrasena}')`;
-  connection.query(INSERT_USERS_QUERY, (err, results) => {
-    if(err) {
-      return res.send(err);
-    } else {
-      return res.send('succesfully added user')
-    }
-  })
-
-})
- 
+    const { usuario, contrasena } = req.query;
+    console.log(req.query);
+    const INSERT_USERS_QUERY = `INSERT INTO administrador (usuario,contrasena) VALUES ('${usuario}', '${contrasena}')`;
+    connection.query(INSERT_USERS_QUERY, (err, results) => {
+        if (err) {
+            return res.send(err);
+        } else {
+            return res.send('succesfully added user');
+        }
+    });
+});
 
 app.listen(3000, () => {
-  console.log('Server is running');
+    console.log('Server is running');
 });
