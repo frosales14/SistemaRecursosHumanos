@@ -60,8 +60,6 @@ app.get('/users/add', (req, res) => {
     });
 });
 
-})
-
 app.get('/aplicantes', (req, res) => {
   connection.query(SELECT_ALL_APPLICANTS_QUERY, (err, results) => {
       if (err) {
