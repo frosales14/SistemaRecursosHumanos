@@ -1,0 +1,24 @@
+{
+    "name": "sistemarecursoshumanos",
+    "version": "1.0.0",
+    "description": "Proyecto para la clase de ingeniería de software II",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/frosales14/SistemaRecursosHumanos.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/frosales14/SistemaRecursosHumanos/issues"
+    },
+    "homepage": "https://github.com/frosales14/SistemaRecursosHumanos#readme",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.7"
+    }
+}
