@@ -9,6 +9,7 @@ dotenv.config();
 //CONEXION A MYSQL
 
 const SELECT_ALL_USERS_QUERY = 'SELECT * FROM administrador';
+const SELECT_ALL_APPLICANTS_QUERY = 'SELECT * FROM aplicante';
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -59,6 +60,18 @@ app.get('/users/add', (req, res) => {
   })
 
 })
+
+app.get('/aplicantes', (req, res) => {
+  connection.query(SELECT_ALL_APPLICANTS_QUERY, (err, results) => {
+      if (err) {
+          return res.send(err);
+      } else {
+          return res.json({
+              data: results
+          });
+      }
+  });
+});
  
 
 app.listen(3000, () => {
