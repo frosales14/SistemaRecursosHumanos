@@ -1,4 +1,5 @@
 /node_modules
 /server/node_modules
+/proyecto-reactjs/node_modules
 
 .env
