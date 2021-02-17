@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import comex from './imgs/comex.png';
+import comex from '../imgs/comex.png';
 
 const useStyles = makeStyles((theme) => ({
   footer: {

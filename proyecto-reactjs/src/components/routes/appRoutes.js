@@ -10,7 +10,7 @@ const AppRoutes = () => {
     const loadRoutes = () => {
         return (
             <Switch>
-                <Route path="/welcome" component={WelcomeScreen} />
+                <Route path="/" component={WelcomeScreen} />
             </Switch>
         )
     }

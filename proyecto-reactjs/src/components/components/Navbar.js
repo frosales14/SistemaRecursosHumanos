@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import comex from './imgs/comex.png';
+import comex from '../imgs/comex.png';
 
 const useStyles = makeStyles(theme =>({
     offset: theme.mixins.toolbar,
