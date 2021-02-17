@@ -129,3 +129,21 @@ app.get('/vacantes-por-ciudad', (req,res) => {
 app.listen(4000, () => {
     console.log('Server is running');
 });
+
+app.get('/administrador',(req,res)=>{
+    mysqlConnection.query('SELECT * FROM administrador',(err,rows,fields)=>{
+         if(!err)
+         res.send(rows);
+         else
+         console.log(err);
+    })
+});
+
+app.get('/aplicante',(req,res)=>{
+    mysqlConnection.query('SELECT nombre, email, fecha_nacimiento FROM aplicante',(err,rows,fields)=>{
+         if(!err)
+         res.send(rows);
+         else
+         console.log(err);
+    })
+});
