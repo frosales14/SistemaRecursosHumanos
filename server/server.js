@@ -10,6 +10,10 @@ dotenv.config();
 
 const SELECT_ALL_USERS_QUERY = 'SELECT * FROM administrador';
 const SELECT_ALL_APPLICANTS_QUERY = 'SELECT * FROM aplicante';
+const SELECT_APPLICANTS_BY_SCORE = 'SELECT apl.nombre, vac.nombre AS vacante, aple.puntuacion FROM aplicante AS apl INNER JOIN aplicantes_por_evaluacion AS aple ON apl.id = aple.aplicante_id INNER JOIN aplicantes_por_vacante AS aplv ON apl.id = aplv.vacante_id INNER JOIN vacante AS vac ON aplv.vacante_id = vac.id;';
+const SELECT_VACANCIES = 'SELECT id, nombre, descripcion, totalvacantes, ciudad FROM vacante';
+const SELECT_VACANCIES_BY_AMOUNT = "SELECT vacante.nombre AS 'Nombre de vacante', SUM(totalvacantes) AS 'Vacantes disponibles' FROM vacante GROUP BY vacante.nombre ORDER BY 'Vacantes disponibles'";
+const SELECT_VACANCIES_BY_CITY = "SELECT vacante.nombre AS 'Nombre de vacante', vacante.ciudad AS 'Ciudad', SUM(totalvacantes) AS 'Vacantes disponibles' FROM vacante GROUP BY vacante.nombre, vacante.ciudad ORDER BY 'Nombre de vacante'";
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -71,7 +75,56 @@ app.get('/aplicantes', (req, res) => {
       }
   });
 });
- 
+
+app.get('/aplicantes-por-puntuacion', (req,res) => {
+    connection.query(SELECT_APPLICANTS_BY_SCORE, (err, results) => {
+        if (err) {
+            return res.send(err);
+        } else {
+            return res.json({
+                data: results,
+            });
+        }
+    });
+});
+
+app.get('/vacantes', (req,res) => {
+    connection.query(SELECT_VACANCIES, (err, results) => {
+        if (err) {
+            return res.send(err);
+        } else {
+            return res.json({
+                data: results,
+            });
+        }
+    });
+});
+
+app.get('/vacantes-por-cantidad', (req,res) => {
+    connection.query(SELECT_VACANCIES_BY_AMOUNT, (err, results) => {
+        if (err) {
+            return res.send(err);
+        } else {
+            return res.json({
+                data: results,
+            });
+        }
+    });
+});
+
+app.get('/vacantes-por-ciudad', (req,res) => {
+    connection.query(SELECT_VACANCIES_BY_CITY, (err, results) => {
+        if (err) {
+            return res.send(err);
+        } else {
+            return res.json({
+                data: results,
+            });
+        }
+    });
+});
+
+
 
 app.listen(4000, () => {
     console.log('Server is running');
