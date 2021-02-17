@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme =>({
     botonesNav:{
         flexGrow: 1,
         margin: theme.spacing(1),
+        border: 0, 
     },
     img: {
         maxWidth: '150px',
