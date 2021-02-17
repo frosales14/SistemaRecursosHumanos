@@ -10,12 +10,12 @@ export const Section = styled.section`
 
 export const Wrapper = styled.div`
     @media only screen and (max-width: ${mobileScreen}) {
-        padding: 135px 0 0 0;
+        padding: 10px 0 0 0;
     }
     @media only screen and (min-width: ${mobileScreen}) and (max-width: ${normalMonitor}) {
-        padding: 190px 0 0 0;
+        padding: 20px 0 0 0;
     }
     @media only screen and (min-width: ${normalMonitor}) {
-        padding: 270px 0 0 0;
+        padding: 100px 0 0 0;
     }
 `;
