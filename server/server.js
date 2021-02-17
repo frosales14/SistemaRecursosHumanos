@@ -124,14 +124,18 @@ app.get('/vacantes-por-ciudad', (req,res) => {
     });
 });
 
-
-
-app.listen(4000, () => {
-    console.log('Server is running');
+app.get('/vacantes/:cantidad',(req,res) => {
+    connection.query('SELECT id, nombre, descripcion, ciudad FROM vacante WHERE totalvacantes = ?', [req.params.cantidad], (err, rows, fields) => {
+        if(err){
+            res.send(err);
+        } else {
+            res.send(rows);
+        }
+    });
 });
 
 app.get('/administrador',(req,res)=>{
-    mysqlConnection.query('SELECT * FROM administrador',(err,rows,fields)=>{
+    connection.query('SELECT * FROM administrador',(err,rows,fields)=>{
          if(!err)
          res.send(rows);
          else
@@ -140,10 +144,14 @@ app.get('/administrador',(req,res)=>{
 });
 
 app.get('/aplicante',(req,res)=>{
-    mysqlConnection.query('SELECT nombre, email, fecha_nacimiento FROM aplicante',(err,rows,fields)=>{
+    connection.query('SELECT nombre, email, fecha_nacimiento FROM aplicante',(err,rows,fields)=>{
          if(!err)
          res.send(rows);
          else
          console.log(err);
     })
+});
+
+app.listen(4000, () => {
+    console.log('Server is running');
 });
