@@ -1,5 +1,3 @@
 import WelcomeScreen from './welcomeScreen';
 
-export {
-    WelcomeScreen
-}
+export { WelcomeScreen };

@@ -6,7 +6,7 @@ import { Wrapper } from './common/layout';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
     return (
         <ThemeProvider theme={theme}>
             <Navbar />
@@ -15,8 +15,7 @@ const Layout = ({children}) => {
             </Wrapper>
             <Footer />
         </ThemeProvider>
-    )
-
-}
+    );
+};
 
 export default Layout;

@@ -1,40 +1,75 @@
-import React from 'react'
-import { AppBar, Toolbar, Typography, makeStyles, Hidden, Container } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
-import MobileAppBar from './mobileNavBar'
+import React from 'react';
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    makeStyles,
+    Hidden,
+    Container,
+} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import MobileAppBar from './mobileNavBar';
 import comex from '../imgs/comex.png';
 
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles((theme) => ({
     offset: theme.mixins.toolbar,
-    title:{
+    title: {
         flexGrow: 1,
     },
-    botonesNav:{
+    botonesNav: {
         flexGrow: 1,
         margin: theme.spacing(1),
-        border: 0, 
+        border: 0,
     },
     img: {
         maxWidth: '150px',
         height: 'auto',
-      }
-}))
+    },
+}));
 
 const Navbar = () => {
-    const classes =useStyles()
+    const classes = useStyles();
     return (
         <div>
             <Container fixed maxWidth="xl">
                 <Hidden mdDown>
-                    <AppBar color='#FFFFF' elevation={1}>
+                    <AppBar color="#FFFFF" elevation={1}>
                         <Toolbar>
-                            <Typography variant='h6' className={classes.title}>
-                                <img className={classes.img} src={comex} alt="logo-comex"></img>
+                            <Typography variant="h6" className={classes.title}>
+                                <img
+                                    className={classes.img}
+                                    src={comex}
+                                    alt="logo-comex"
+                                ></img>
                             </Typography>
-                            <Button variant='outlined' color='primary' className={classes.botonesNav}>INICIO</Button>
-                            <Button variant='outlined' color='primary' className={classes.botonesNav}>PUESTOS</Button>
-                            <Button variant='outlined' color='primary' className={classes.botonesNav}>NOSOTROS</Button>
-                            <Button variant='outlined' color='primary' className={classes.botonesNav}>¿CÓMO APLICAR?</Button>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.botonesNav}
+                            >
+                                INICIO
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.botonesNav}
+                            >
+                                PUESTOS
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.botonesNav}
+                            >
+                                NOSOTROS
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.botonesNav}
+                            >
+                                ¿CÓMO APLICAR?
+                            </Button>
                         </Toolbar>
                     </AppBar>
                 </Hidden>
@@ -42,7 +77,7 @@ const Navbar = () => {
             <MobileAppBar />
             <div className={classes.offset}></div>
         </div>
-    )
-}
+    );
+};
 
 export default Navbar;
