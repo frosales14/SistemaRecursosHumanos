@@ -29,6 +29,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
     const classes = useStyles();
+
+    const menu = [
+        { name: 'Inicio', path: '' },
+        { name: 'Puestos', path: '' },
+        { name: 'Nostros', path: '' },
+        { name: 'Como Aplicar', path: '' },
+    ];
+
     return (
         <div>
             <Container fixed maxWidth="xl">
@@ -42,34 +50,17 @@ const Navbar = () => {
                                     alt="logo-comex"
                                 ></img>
                             </Typography>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.botonesNav}
-                            >
-                                INICIO
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.botonesNav}
-                            >
-                                PUESTOS
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.botonesNav}
-                            >
-                                NOSOTROS
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.botonesNav}
-                            >
-                                ¿CÓMO APLICAR?
-                            </Button>
+                            {menu.map((item) => {
+                                return (
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        className={classes.botonesNav}
+                                    >
+                                        {item.name}
+                                    </Button>
+                                );
+                            })}
                         </Toolbar>
                     </AppBar>
                 </Hidden>

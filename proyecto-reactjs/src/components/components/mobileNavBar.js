@@ -10,11 +10,11 @@ import comex from '../imgs/comex.png';
 const MenuButton = styled(IconButton)``;
 
 const MobileHeader = styled.header`
-    padding: ${prop => (prop.scrollPosition > 10 ? '10px 0' : '20px 0')};
+    padding: ${(prop) => (prop.scrollPosition > 10 ? '10px 0' : '20px 0')};
     transition: padding, 0.5s;
     img {
         transition: width, 0.5s;
-        width: ${prop => (prop.scrollPosition > 10 ? '85%' : '100%')};
+        width: ${(prop) => (prop.scrollPosition > 10 ? '85%' : '100%')};
     }
     @media only screen and (min-width: ${normalMonitor}) {
         display: none;
@@ -40,12 +40,11 @@ const MobileNav = styled.nav`
     }
 `;
 
-
 const MobileNavBar = () => {
     const currentScrollPosition = useScrollPosition();
     const [mobileDrawer, setMobileDrawer] = useState(false);
 
-    const toggleDrawer = open => event => {
+    const toggleDrawer = (open) => (event) => {
         if (
             event.type === 'keydown' &&
             (event.key === 'Tab' || event.key === 'Shift')
@@ -57,11 +56,11 @@ const MobileNavBar = () => {
     };
 
     const buttons = [
-        {name: 'Inicio', path: ''},
-        {name: 'Puestos', path: ''},
-        {name: 'Nosotros', path: ''},
-        {name: '¿Como Aplicar?', path: ''},
-    ]
+        { name: 'Inicio', path: '/' },
+        { name: 'Puestos', path: '' },
+        { name: 'Nosotros', path: '' },
+        { name: '¿Como Aplicar?', path: '' },
+    ];
 
     return (
         <>
@@ -78,13 +77,13 @@ const MobileNavBar = () => {
                 <Container fixed maxWidth="xl">
                     <Grid container alignItems="center">
                         <Grid item xs={6}>
-                            {/* Logo */}                          
-                                <img
-                                    loading="lazy"
-                                    alt="comex-logo"
-                                    src={comex}
-                                    height="auto"
-                                />
+                            {/* Logo */}
+                            <img
+                                loading="lazy"
+                                alt="comex-logo"
+                                src={comex}
+                                height="auto"
+                            />
                         </Grid>
                         <Grid container item justify="flex-end" xs={6}>
                             {/* Navigation Button */}
@@ -102,7 +101,7 @@ const MobileNavBar = () => {
                     </Grid>
                 </Container>
                 <Drawer open={mobileDrawer} onClose={toggleDrawer(false)}>
-                     <div
+                    <div
                         role="presentation"
                         style={{ width: '50vw', marginTop: '20%' }}
                         onClick={toggleDrawer(false)}
@@ -110,12 +109,10 @@ const MobileNavBar = () => {
                     >
                         <MobileNav>
                             <ul>
-                                {buttons.map(button => {
-                                    return(
-                                        <li key={button.name}>
-                                            {button.name}
-                                        </li>
-                                    )
+                                {buttons.map((button) => {
+                                    return (
+                                        <li key={button.name}>{button.name}</li>
+                                    );
                                 })}
                             </ul>
                         </MobileNav>
@@ -123,7 +120,7 @@ const MobileNavBar = () => {
                 </Drawer>
             </MobileHeader>
         </>
-    )
-}
+    );
+};
 
 export default MobileNavBar;

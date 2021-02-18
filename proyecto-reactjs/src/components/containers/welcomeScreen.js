@@ -33,7 +33,6 @@ const WelcomeScreen = () => {
         textoPrincipal,
         textoSecundario,
         boton,
-        contenido,
         imagenPrincipal,
     } = useStyles();
     return (
