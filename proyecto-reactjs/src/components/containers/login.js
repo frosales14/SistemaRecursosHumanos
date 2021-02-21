@@ -8,19 +8,15 @@ import {
     TextField,
     Button,
     Input,
+    Snackbar,
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import Layout from '../components/layout';
 
-// async function loginUser(credentials) {
-//     return fetch('http://localhost:4000/login', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(credentials),
-//     }).then((data) => data.json());
-// }
+function Alert(props) {
+    return <MuiAlert elevation={6} variante="filled" {...props} />;
+}
 
 const CustomInput = styled(Input)`
     background-color: #02ddfb;
@@ -36,32 +32,50 @@ const CustomButton = styled(Button)`
     }
 `;
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
-    },
-    margin: {
-        margin: theme.spacing(1),
-    },
-}));
-
 const Login = () => {
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [incorrectUser, setIncorrectUser] = useState(false);
+    const [correctUser, setCorrectUser] = useState(false);
+    const [userSession, setUserSession] = useState(false);
+    const [users, setUsers] = useState([
+        {
+            name: 'carlos@email.com',
+            password: 'password',
+        },
+        {
+            name: 'melvin@email.com',
+            password: 'password',
+        },
+    ]);
 
-    const classes = useStyles();
+    const onUserInputChange = (e) => {
+        e.preventDefault();
+        setUsername(e.target.value.toLowerCase().trim());
+    };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const token = await loginUser({
-    //         username,
-    //         password,
-    //     });
-    //     setToken(token);
-    // };
+    const onPasswordInputChange = (e) => {
+        e.preventDefault();
+        setPassword(e.target.value.toLowerCase().trim());
+    };
+
+    const onLoginSumbit = () => {
+        users.map((user) => {
+            if (user.name !== username && user.password !== password) {
+                setIncorrectUser(true);
+            } else {
+                setCorrectUser(true);
+            }
+        });
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setIncorrectUser(false);
+        setCorrectUser(false);
+    };
 
     return (
         <Layout>
@@ -72,26 +86,53 @@ const Login = () => {
                     alignItems="center"
                     justify="center"
                 >
-                    <form
-                        className={classes.root}
-                        noValidate
-                        autoComplete="off"
+                    <Grid
+                        item
+                        container
+                        spacing={4}
+                        direction="column"
+                        xs={12}
+                        md={6}
                     >
                         <Grid item>
                             <Typography>Nombre de Usuario</Typography>
-                            <CustomInput id="username" fullWidth />
+                            <CustomInput
+                                id="username"
+                                fullWidth
+                                onChange={onUserInputChange}
+                            />
                         </Grid>
                         <Grid item>
                             <Typography>Contraseña</Typography>
-                            <CustomInput id="password" fullWidth />
+                            <CustomInput
+                                id="password"
+                                fullWidth
+                                onChange={onPasswordInputChange}
+                            />
                         </Grid>
                         <Grid item container justify="flex-end">
-                            <CustomButton className={classes.margin}>
+                            <CustomButton onClick={onLoginSumbit}>
                                 Ingresar
                             </CustomButton>
                         </Grid>
-                    </form>
+                    </Grid>
                 </Grid>
+                <Snackbar
+                    open={incorrectUser}
+                    autoHideDuration={4000}
+                    onClose={handleClose}
+                >
+                    <Alert severity="error">
+                        Usuario o contraseña incorrectos!
+                    </Alert>
+                </Snackbar>
+                <Snackbar
+                    open={correctUser}
+                    autoHideDuration={4000}
+                    onClose={handleClose}
+                >
+                    <Alert severity="success">Inicio de sesion exitosa!</Alert>
+                </Snackbar>
             </Container>
         </Layout>
     );

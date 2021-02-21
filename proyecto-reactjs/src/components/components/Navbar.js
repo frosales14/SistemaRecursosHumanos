@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
     AppBar,
     Toolbar,
@@ -11,6 +12,10 @@ import { Grid, Button } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import MobileAppBar from './mobileNavBar';
 import comex from '../imgs/comex.png';
+
+const NavLink = styled.a`
+    text-decoration: none;
+`;
 
 const useStyles = makeStyles((theme) => ({
     offset: theme.mixins.toolbar,
@@ -29,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
     loginIcon: {
         color: '#02ddfb',
         height: 'auto',
-        width: '40px',
         cursor: 'pointer',
+        width: '40px',
         '&:hover': {
             color: '#00abc8',
         },
@@ -41,15 +46,11 @@ const Navbar = () => {
     const classes = useStyles();
 
     const menu = [
-        { name: 'Inicio', path: '' },
+        { name: 'Inicio', path: '/' },
         { name: 'Puestos', path: '' },
         { name: 'Nostros', path: '' },
         { name: 'Como Aplicar', path: '' },
     ];
-
-    const onCLickHandler = () => {
-        console.log('login clicked');
-    };
 
     return (
         <div>
@@ -79,24 +80,27 @@ const Navbar = () => {
                                                 md={3}
                                                 lg={3}
                                             >
-                                                <Button
-                                                    variant="outlined"
-                                                    color="primary"
-                                                    className={
-                                                        classes.botonesNav
-                                                    }
-                                                >
-                                                    {item.name}
-                                                </Button>
+                                                <NavLink href={item.path}>
+                                                    <Button
+                                                        variant="outlined"
+                                                        color="primary"
+                                                        className={
+                                                            classes.botonesNav
+                                                        }
+                                                    >
+                                                        {item.name}
+                                                    </Button>
+                                                </NavLink>
                                             </Grid>
                                         );
                                     })}
                                 </Grid>
                                 <Grid item md={1} lg={1}>
-                                    <AccountCircle
-                                        className={classes.loginIcon}
-                                        onClick={onCLickHandler}
-                                    />
+                                    <NavLink href="/login">
+                                        <AccountCircle
+                                            className={classes.loginIcon}
+                                        />
+                                    </NavLink>
                                 </Grid>
                             </Grid>
                         </Toolbar>
