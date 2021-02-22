@@ -32,7 +32,7 @@ const Navbar = () => {
   const menu = [
     { name: "Inicio", path: "" },
     { name: "Puestos", path: "" },
-    { name: "Nostros", path: "" },
+    { name: "Nosotros", path: "" },
     { name: "Como Aplicar", path: "" },
   ];
 
