@@ -13,23 +13,41 @@ import {
 import MuiAlert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import Layout from '../components/layout';
+import { mobileScreen } from '../components/common/sizes';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variante="filled" {...props} />;
 }
 
 const CustomInput = styled(Input)`
+    font-family: Monserrat Semi Bold;
     background-color: #02ddfb;
     height: 40px;
     font-size: 15px;
 `;
 
 const CustomButton = styled(Button)`
+    font-family: Monserrat Bold;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.7rem;
     background-color: #061c32;
     color: white;
     &:hover {
         background-color: #31425c;
     }
+    @media only screen and (max-width: ${mobileScreen}) {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+`;
+
+const SubHeader = styled(Typography)`
+    font-family: Monserrat Bold;
+    font-weight: 900;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
 `;
 
 const Login = () => {
@@ -95,7 +113,7 @@ const Login = () => {
                         md={6}
                     >
                         <Grid item>
-                            <Typography>Nombre de Usuario</Typography>
+                            <SubHeader>Nombre de Usuario</SubHeader>
                             <CustomInput
                                 id="username"
                                 fullWidth
@@ -103,9 +121,10 @@ const Login = () => {
                             />
                         </Grid>
                         <Grid item>
-                            <Typography>Contraseña</Typography>
+                            <SubHeader>Contraseña</SubHeader>
                             <CustomInput
                                 id="password"
+                                type="password"
                                 fullWidth
                                 onChange={onPasswordInputChange}
                             />
