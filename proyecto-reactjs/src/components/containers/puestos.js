@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Container } from "@material-ui/core";
+import { Grid, Typography, Container, InputLabel, FormControl, Select, MenuItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Layout from "../components/layout";
 import Paper from "@material-ui/core/Paper";
@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
   textBoton: {
     color: "#FFFFFF",
   },
+  formControl: {
+    minWidth: 200
+  }
 }));
 
 const Puestos = () => {
@@ -53,6 +56,7 @@ const Puestos = () => {
     infoVacantes,
     boton,
     textBoton,
+    formControl
   } = useStyles();
   return (
     <Layout>
@@ -71,6 +75,21 @@ const Puestos = () => {
               PLAZAS DISPONIBLES
             </Typography>
           </Grid>
+        </Grid>
+
+        <Grid container item justify="center" spacing={4}>
+          <Grid item>
+            <FormControl className={formControl}>
+              <InputLabel>Departamentos</InputLabel>
+              <Select>
+                <MenuItem value='IT'>IT</MenuItem>
+                <MenuItem value='Marketing'>Marketing</MenuItem>
+                <MenuItem value='HR'>HR</MenuItem>
+                <MenuItem value='Ventas'>Ventas</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
         </Grid>
 
         <Grid container className={containerMain} spacing={4}>
