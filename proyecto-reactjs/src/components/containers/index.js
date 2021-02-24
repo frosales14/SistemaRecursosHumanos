@@ -1,4 +1,5 @@
-/* import WelcomeScreen from './welcomeScreen'; */
-import Puestos from "./puestos";
+//import WelcomeScreen from './welcomeScreen';
+//import Puestos from "./puestos";
+import Registro from "./registro";
 
-export { Puestos };
+export { Registro };
