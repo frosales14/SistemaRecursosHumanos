@@ -58,6 +58,18 @@ const Puestos = () => {
     textBoton,
     formControl
   } = useStyles();
+
+  const valoresDrop = [
+    {
+      valor: 'IT'
+    },
+    {
+      valor: 'Marketing'
+    },
+    {
+      valor: 'Marketing'
+    }
+  ]
   return (
     <Layout>
       <Container>
@@ -82,10 +94,11 @@ const Puestos = () => {
             <FormControl className={formControl}>
               <InputLabel>Departamentos</InputLabel>
               <Select>
-                <MenuItem value='IT'>IT</MenuItem>
-                <MenuItem value='Marketing'>Marketing</MenuItem>
-                <MenuItem value='HR'>HR</MenuItem>
-                <MenuItem value='Ventas'>Ventas</MenuItem>
+                {valoresDrop.map( item => {
+                  return(
+                    <MenuItem value={item.valor}>{item.valor}</MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
           </Grid>
