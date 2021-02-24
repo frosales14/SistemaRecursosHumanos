@@ -159,12 +159,6 @@ app.get('/aplicante', (req, res) => {
     );
 });
 
-app.use('/login', (req, res) => {
-    res.send({
-        token: 'test123',
-    });
-});
-
 app.listen(4000, () => {
     console.log('Server is running');
 });
