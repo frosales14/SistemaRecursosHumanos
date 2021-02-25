@@ -24,11 +24,18 @@ const AppRoutes = () => {
     };
 
     return (
-        <Router history={browserHistory}>
-            <CssBaseline />
-            {loadRoutes()}
-        </Router>
+      <Switch>
+        <Route path="/" component={Puestos} />
+      </Switch>
     );
+  };
+
+  return (
+    <Router history={browserHistory}>
+      <CssBaseline />
+      {loadRoutes()}
+    </Router>
+  );
 };
 
 export default AppRoutes;
