@@ -43,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-  const classes = useStyles();
+    const classes = useStyles();
 
     const menu = [
         { name: 'Inicio', path: '/' },
-        { name: 'Puestos', path: '' },
+        { name: 'Puestos', path: '/puestos' },
         { name: 'Nostros', path: '' },
         { name: 'Como Aplicar', path: '' },
     ];

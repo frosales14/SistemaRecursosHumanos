@@ -8,7 +8,7 @@ import {
     BrowserRouter,
 } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { WelcomeScreen, Login } from '../containers';
+import { WelcomeScreen, Login, Puestos } from '../containers';
 import useToken from '../components/hooks/useToken';
 
 const browserHistory = createBrowserHistory();
@@ -19,23 +19,17 @@ const AppRoutes = () => {
             <Switch>
                 <Route exact path="/" component={WelcomeScreen} />
                 <Route path="/login" component={Login} />
+                <Route path="/puestos" component={Puestos} />
             </Switch>
         );
     };
 
     return (
-      <Switch>
-        <Route path="/" component={Puestos} />
-      </Switch>
+        <Router history={browserHistory}>
+            <CssBaseline />
+            {loadRoutes()}
+        </Router>
     );
-  };
-
-  return (
-    <Router history={browserHistory}>
-      <CssBaseline />
-      {loadRoutes()}
-    </Router>
-  );
 };
 
 export default AppRoutes;
