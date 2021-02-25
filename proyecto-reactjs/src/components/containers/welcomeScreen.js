@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
     Grid,
     makeStyles,
@@ -9,6 +10,51 @@ import {
 import Button from '@material-ui/core/Button';
 import Layout from '../components/layout';
 import imagen from '../imgs/welcome_screen_image.svg';
+
+const NavLink = styled.a`
+    text-decoration: none;
+`;
+
+const Header1 = styled(Typography)`
+    font-family: Monserrat Light;
+    font-weight: 900;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: #00bff6;
+`;
+
+const Header2 = styled(Typography)`
+    font-family: Monserrat Thin;
+    font-weight: 900;
+    text-decoration: none;
+    font-size: 1.6rem;
+    color: #00bff6;
+`;
+
+const PrimaryButton = styled(Button)`
+    font-family: Monserrat Regular;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    background-color: #061c32;
+    color: white;
+    border-radius: 15px;
+    &:hover {
+        background-color: #31425c;
+    }
+`;
+
+const SecondaryButton = styled(Button)`
+    font-family: Monserrat Regular;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border-radius: 15px;
+    &:hover {
+        background-color: #31425c;
+    }
+`;
 
 const useStyles = makeStyles((theme) => ({
     textoPrincipal: {
@@ -41,18 +87,16 @@ const WelcomeScreen = () => {
                 <Grid container sapcing={2} alignItems="center">
                     <Grid item container spacing={2} xs={12} md={6} lg={6}>
                         <Grid item>
-                            <Typography variant="h3" className={textoPrincipal}>
+                            <Header1>
                                 ¿LISTO PARA ENCONTRAR EL TRABAJO DE TUS SUEÑOS?
-                            </Typography>
+                            </Header1>
                         </Grid>
                         <Grid item>
-                            <Typography className={textoSecundario}>
-                                EN COMEX TE ESTAMOS ESPERANDO
-                            </Typography>
+                            <Header2>EN Comex TE ESTAMOS ESPERANDO</Header2>
                         </Grid>
-                        <Grid item container>
+                        <Grid item container alignItems="center">
                             <Grid item>
-                                <Button
+                                <SecondaryButton
                                     className={boton}
                                     variant="outlined"
                                     color="secondary"
@@ -60,19 +104,19 @@ const WelcomeScreen = () => {
                                     size="large"
                                 >
                                     MAS INFO
-                                </Button>
+                                </SecondaryButton>
                             </Grid>
                             <Grid item>
-                                <Button
-                                    className={boton}
-                                    variant="contained"
-                                    color="secondary"
-                                    href="#"
-                                    disableElevation
-                                    size="large"
-                                >
-                                    APLICAR
-                                </Button>
+                                <NavLink href="/puestos">
+                                    <PrimaryButton
+                                        variant="contained"
+                                        color="secondary"
+                                        disableElevation
+                                        size="large"
+                                    >
+                                        APLICAR
+                                    </PrimaryButton>
+                                </NavLink>
                             </Grid>
                         </Grid>
                     </Grid>

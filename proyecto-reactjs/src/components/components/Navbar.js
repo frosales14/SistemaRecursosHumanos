@@ -1,68 +1,116 @@
-import React from "react";
+import React from 'react';
+import styled from 'styled-components';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  makeStyles,
-  Hidden,
-  Container,
-} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import MobileAppBar from "./mobileNavBar";
-import comex from "../imgs/comex.png";
+    AppBar,
+    Toolbar,
+    Typography,
+    makeStyles,
+    Hidden,
+    Container,
+} from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
+import MobileAppBar from './mobileNavBar';
+import comex from '../imgs/comex.png';
+
+const NavLink = styled.a`
+    text-decoration: none;
+`;
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    flexGrow: 1,
-  },
-  botonesNav: {
-    flexGrow: 1,
-    margin: theme.spacing(1),
-    border: 0,
-  },
-  img: {
-    maxWidth: "150px",
-    height: "auto",
-  },
+    offset: theme.mixins.toolbar,
+    title: {
+        flexGrow: 1,
+    },
+    botonesNav: {
+        flexGrow: 1,
+        margin: theme.spacing(1),
+        border: 0,
+    },
+    img: {
+        maxWidth: '150px',
+        height: 'auto',
+    },
+    loginIcon: {
+        color: '#02ddfb',
+        height: 'auto',
+        cursor: 'pointer',
+        width: '40px',
+        '&:hover': {
+            color: '#00abc8',
+        },
+    },
 }));
 
 const Navbar = () => {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  const menu = [
-    { name: "Inicio", path: "" },
-    { name: "Puestos", path: "" },
-    { name: "Nosotros", path: "" },
-    { name: "Como Aplicar", path: "" },
-  ];
+    const menu = [
+        { name: 'Inicio', path: '/' },
+        { name: 'Puestos', path: '/puestos' },
+        { name: 'Nostros', path: '' },
+        { name: 'Como Aplicar', path: '' },
+    ];
 
-  return (
-    <div>
-      <Container fixed maxWidth="xl">
-        <Hidden mdDown>
-          <AppBar color="#FFFFF" elevation={1}>
-            <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                <img className={classes.img} src={comex} alt="logo-comex"></img>
-              </Typography>
-              {menu.map((item) => {
-                return (
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    className={classes.botonesNav}
-                  >
-                    {item.name}
-                  </Button>
-                );
-              })}
-            </Toolbar>
-          </AppBar>
-        </Hidden>
-      </Container>
-      <MobileAppBar />
-    </div>
-  );
+    return (
+        <div>
+            <Container fixed maxWidth="xl">
+                <Hidden mdDown>
+                    <AppBar color="#FFFFF" elevation={1}>
+                        <Toolbar>
+                            <Grid container alignItems="center" direction="row">
+                                <Grid item md={3} lg={3}>
+                                    <Typography
+                                        variant="h6"
+                                        className={classes.title}
+                                    >
+                                        <img
+                                            className={classes.img}
+                                            src={comex}
+                                            alt="logo-comex"
+                                        ></img>
+                                    </Typography>
+                                </Grid>
+                                <Grid item container md={8} lg={8}>
+                                    {menu.map((item, index) => {
+                                        return (
+                                            <Grid
+                                                item
+                                                key={index}
+                                                md={3}
+                                                lg={3}
+                                            >
+                                                <NavLink href={item.path}>
+                                                    <Button
+                                                        variant="outlined"
+                                                        color="primary"
+                                                        className={
+                                                            classes.botonesNav
+                                                        }
+                                                    >
+                                                        {item.name}
+                                                    </Button>
+                                                </NavLink>
+                                            </Grid>
+                                        );
+                                    })}
+                                </Grid>
+                                <Grid item md={1} lg={1}>
+                                    <NavLink href="/login">
+                                        <AccountCircle
+                                            className={classes.loginIcon}
+                                        />
+                                    </NavLink>
+                                </Grid>
+                            </Grid>
+                        </Toolbar>
+                    </AppBar>
+                </Hidden>
+            </Container>
+            <MobileAppBar />
+            <div className={classes.offset}></div>
+        </div>
+    );
 };
 
 export default Navbar;

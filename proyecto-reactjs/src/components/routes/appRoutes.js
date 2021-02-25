@@ -1,31 +1,36 @@
-import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { Router, Switch, Redirect, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
-
-//import { WelcomeScreen } from '../containers';
-//import { Puestos } from "../containers";
-import { Registro } from "../containers";
+import React, { useState } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+    Router,
+    Switch,
+    Redirect,
+    Route,
+    BrowserRouter,
+} from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { WelcomeScreen, Login, Puestos, Registro } from '../containers';
+import useToken from '../components/hooks/useToken';
 
 const browserHistory = createBrowserHistory();
 
 const AppRoutes = () => {
-  const loadRoutes = () => {
-    return (
-      <Switch>
-        {/* <Route path="/" component={WelcomeScreen} /> */}
-        {/* <Route path="/" component={Puestos} /> */}
-        <Route path="/" component={Registro} />
-      </Switch>
-    );
-  };
+    const loadRoutes = () => {
+        return (
+            <Switch>
+                <Route exact path="/" component={WelcomeScreen} />
+                <Route path="/login" component={Login} />
+                <Route path="/puestos" component={Puestos} />
+                <Route path="/registro" component={Registro} />
+            </Switch>
+        );
+    };
 
-  return (
-    <Router history={browserHistory}>
-      <CssBaseline />
-      {loadRoutes()}
-    </Router>
-  );
+    return (
+        <Router history={browserHistory}>
+            <CssBaseline />
+            {loadRoutes()}
+        </Router>
+    );
 };
 
 export default AppRoutes;
