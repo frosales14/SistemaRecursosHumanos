@@ -11,6 +11,10 @@ import { createBrowserHistory } from 'history';
 import { WelcomeScreen, Login, Puestos } from '../containers';
 import useToken from '../components/hooks/useToken';
 
+//import { WelcomeScreen } from '../containers';
+//import { Puestos } from "../containers";
+import { Registro } from "../containers";
+
 const browserHistory = createBrowserHistory();
 
 const AppRoutes = () => {
