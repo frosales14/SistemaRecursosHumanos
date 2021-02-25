@@ -11,6 +11,10 @@ import Button from '@material-ui/core/Button';
 import Layout from '../components/layout';
 import imagen from '../imgs/welcome_screen_image.svg';
 
+const NavLink = styled.a`
+    text-decoration: none;
+`;
+
 const Header1 = styled(Typography)`
     font-family: Monserrat Light;
     font-weight: 900;
@@ -103,15 +107,16 @@ const WelcomeScreen = () => {
                                 </SecondaryButton>
                             </Grid>
                             <Grid item>
-                                <PrimaryButton
-                                    variant="contained"
-                                    color="secondary"
-                                    href="#"
-                                    disableElevation
-                                    size="large"
-                                >
-                                    APLICAR
-                                </PrimaryButton>
+                                <NavLink href="/puestos">
+                                    <PrimaryButton
+                                        variant="contained"
+                                        color="secondary"
+                                        disableElevation
+                                        size="large"
+                                    >
+                                        APLICAR
+                                    </PrimaryButton>
+                                </NavLink>
                             </Grid>
                         </Grid>
                     </Grid>

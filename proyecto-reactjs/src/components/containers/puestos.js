@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
     Grid,
     Typography,
@@ -12,6 +13,10 @@ import Button from '@material-ui/core/Button';
 import Layout from '../components/layout';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+
+const NavLink = styled.a`
+    text-decoration: none;
+`;
 
 const useStyles = makeStyles((theme) => ({
     containerMain: {
@@ -175,21 +180,23 @@ const Puestos = () => {
                                             </Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Button
-                                                className={boton}
-                                                variant="contained"
-                                                color="primary"
-                                                disableElevation
-                                                size="large"
-                                                fullWidth="true"
-                                            >
-                                                <Typography
-                                                    className={textBoton}
-                                                    variant={'h6'}
+                                            <NavLink href="/registro">
+                                                <Button
+                                                    className={boton}
+                                                    variant="contained"
+                                                    color="primary"
+                                                    disableElevation
+                                                    size="large"
+                                                    fullWidth="true"
                                                 >
-                                                    APLICAR
-                                                </Typography>
-                                            </Button>
+                                                    <Typography
+                                                        className={textBoton}
+                                                        variant={'h6'}
+                                                    >
+                                                        APLICAR
+                                                    </Typography>
+                                                </Button>
+                                            </NavLink>
                                         </Grid>
                                     </Paper>
                                 </Grid>

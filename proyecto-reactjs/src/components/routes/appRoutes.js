@@ -8,12 +8,8 @@ import {
     BrowserRouter,
 } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { WelcomeScreen, Login, Puestos } from '../containers';
+import { WelcomeScreen, Login, Puestos, Registro } from '../containers';
 import useToken from '../components/hooks/useToken';
-
-//import { WelcomeScreen } from '../containers';
-//import { Puestos } from "../containers";
-import { Registro } from "../containers";
 
 const browserHistory = createBrowserHistory();
 
@@ -24,6 +20,7 @@ const AppRoutes = () => {
                 <Route exact path="/" component={WelcomeScreen} />
                 <Route path="/login" component={Login} />
                 <Route path="/puestos" component={Puestos} />
+                <Route path="/registro" component={Registro} />
             </Switch>
         );
     };
