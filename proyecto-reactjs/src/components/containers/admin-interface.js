@@ -10,6 +10,10 @@ import styled from 'styled-components';
 import Layout from '../components/layout';
 import { mobileScreen } from '../components/common/sizes';
 
+const NavLink = styled.a`
+    text-decoration: none;
+`;
+
 const AdminButton = styled(Button)`
     font-family: Monserrat Bold;
     background-color: #061c32;
@@ -34,12 +38,16 @@ const AdminInterface = () => {
             <Container fixed madWidth="xl">
                 <Grid container direction="row" alignItems="center" spacing={3}>
                     <Grid item xs={12} sm={4} md={4}>
-                        <AdminButton>
-                            Publicar Oportunidades Laborales
-                        </AdminButton>
+                        <NavLink href="/creacion-vacantes">
+                            <AdminButton>
+                                Publicar Oportunidades Laborales
+                            </AdminButton>
+                        </NavLink>
                     </Grid>
                     <Grid item xs={12} sm={4} md={4}>
-                        <AdminButton>Ver Aplicantes</AdminButton>
+                        <NavLink href="/lista-aplicantes">
+                            <AdminButton>Ver Aplicantes</AdminButton>
+                        </NavLink>
                     </Grid>
                     <Grid item xs={12} sm={4} md={4}>
                         <AdminButton>Administrar Plazas Existentes</AdminButton>

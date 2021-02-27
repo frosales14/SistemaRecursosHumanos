@@ -14,6 +14,8 @@ import {
     Puestos,
     Registro,
     AdminInterface,
+    ListaAplicantes,
+    CrearVacantes,
 } from '../containers';
 import useToken from '../components/hooks/useToken';
 
@@ -28,6 +30,8 @@ const AppRoutes = () => {
                 <Route path="/puestos" component={Puestos} />
                 <Route path="/registro" component={Registro} />
                 <Route path="/admin-interface" component={AdminInterface} />
+                <Route path="/lista-aplicantes" component={ListaAplicantes} />
+                <Route path="/creacion-vacantes" component={CrearVacantes} />
             </Switch>
         );
     };
