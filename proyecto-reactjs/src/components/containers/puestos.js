@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {
     Grid,
@@ -115,6 +115,24 @@ const Puestos = () => {
         },
     ];
 
+     // FETCH GET AL BACKEND
+
+  const [data, setData] = useState ([]);
+  
+  const apiGet = () => {
+        fetch('http://localhost:4000/vacantes/4')
+        .then((response) => response.json())
+        .then((json) => {
+        console.log(json)
+        setData(json); 
+        });
+    };
+  
+        useEffect(() => {
+          apiGet();
+        }, [])
+    
+
     return (
         <Layout>
             <Container>
@@ -152,31 +170,31 @@ const Puestos = () => {
                         xs={12}
                         direction="row"
                     >
-                        {puestos.map((puesto, index) => {
+                        {data.map((data, index) => {
                             return (
                                 <Grid item key={index} md={3} xs={12} sm={6}>
                                     <Paper className={papers}>
                                         <Typography
-                                            variant={'h4'}
+                                            variant={'h88'}
                                             className={nombrePuesto}
                                         >
-                                            {puesto.titulo}
+                                            {JSON.stringify(data, null, 2)}
                                         </Typography>
                                         <Typography className={infoPuesto}>
-                                            {puesto.descripcion}
+                                            {/* {puesto.descripcion} */}
                                         </Typography>
                                         <Grid item>
                                             <Typography
                                                 className={infoVacantes}
                                                 variant={'h6'}
                                             >
-                                                {puesto.numVacantes}
+                                                {/* {puesto.numVacantes} */}
                                             </Typography>
                                             <Typography
                                                 className={infoVacantes}
                                                 variant={'h6'}
                                             >
-                                                {puesto.hireDate}
+                                                {/* {puesto.hireDate} */}
                                             </Typography>
                                         </Grid>
                                         <Grid item>
