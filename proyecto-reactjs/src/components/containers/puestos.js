@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
     Grid,
@@ -18,6 +18,21 @@ const NavLink = styled.a`
     text-decoration: none;
 `;
 
+const Header1 = styled(Typography)`
+    font-family: Monserrat Bold;
+    font-weight: 200;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+`;
+
+const Paragraph = styled(Typography)`
+    font-family: Monserrat Light;
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+`;
+
 const useStyles = makeStyles((theme) => ({
     containerMain: {
         marginBottom: theme.spacing(10),
@@ -25,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     papers: {
         padding: theme.spacing(1),
         textAlign: 'center',
+        height: '100%',
     },
     title: {
         fontSize: '2rem',
@@ -32,12 +48,6 @@ const useStyles = makeStyles((theme) => ({
     },
     nombrePuesto: {
         padding: theme.spacing(2),
-    },
-    infoPuesto: {
-        fontSize: '15px',
-        lineHeight: '25px',
-        letterSpacing: '0em',
-        /*     textTransform: "uppercase", */
     },
     infoVacantes: {
         marginTop: theme.spacing(2),
@@ -84,54 +94,24 @@ const Puestos = () => {
         },
     ];
 
-    const puestos = [
-        {
-            titulo: 'Plaza 1',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-        {
-            titulo: 'Plaza 2',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-        {
-            titulo: 'Plaza 3',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-        {
-            titulo: 'Plaza 4',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-    ];
+    const [vacantes, setVacantes] = useState([]);
 
-     // FETCH GET AL BACKEND
+    const getVacantes = async () => {
+        const response = await fetch('http://localhost:4000/vacantes');
+        const body = await response.json();
 
-  const [data, setData] = useState ([]);
-  
-  const apiGet = () => {
-        fetch('http://localhost:4000/vacantes/4')
-        .then((response) => response.json())
-        .then((json) => {
-        console.log(json)
-        setData(json); 
-        });
+        if (response.status !== 200) {
+            throw Error(body.response);
+        }
+
+        return body;
     };
-  
-        useEffect(() => {
-          apiGet();
-        }, [])
-    
+
+    useEffect(() => {
+        getVacantes()
+            .then((res) => setVacantes(res.vacantes))
+            .catch((err) => console.log(err));
+    }, []);
 
     return (
         <Layout>
@@ -170,31 +150,28 @@ const Puestos = () => {
                         xs={12}
                         direction="row"
                     >
-                        {data.map((data, index) => {
+                        {vacantes.map((vacante, index) => {
                             return (
                                 <Grid item key={index} md={3} xs={12} sm={6}>
                                     <Paper className={papers}>
-                                        <Typography
-                                            variant={'h88'}
-                                            className={nombrePuesto}
-                                        >
-                                            {JSON.stringify(data, null, 2)}
-                                        </Typography>
-                                        <Typography className={infoPuesto}>
-                                            {/* {puesto.descripcion} */}
-                                        </Typography>
+                                        <Header1 className={nombrePuesto}>
+                                            {vacante.nombre}
+                                        </Header1>
+                                        <Paragraph>
+                                            {vacante.descripcion}
+                                        </Paragraph>
                                         <Grid item>
                                             <Typography
                                                 className={infoVacantes}
                                                 variant={'h6'}
                                             >
-                                                {/* {puesto.numVacantes} */}
+                                                {vacante.totalVacantes}
                                             </Typography>
                                             <Typography
                                                 className={infoVacantes}
                                                 variant={'h6'}
                                             >
-                                                {/* {puesto.hireDate} */}
+                                                {vacante.ciudad}
                                             </Typography>
                                         </Grid>
                                         <Grid item>

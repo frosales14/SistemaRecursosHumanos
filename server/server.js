@@ -98,7 +98,7 @@ app.get('/vacantes', (req, res) => {
             return res.send(err);
         } else {
             return res.json({
-                data: results,
+                vacantes: results,
             });
         }
     });
