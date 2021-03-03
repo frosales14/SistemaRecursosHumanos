@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {
     Grid,
@@ -80,9 +80,16 @@ const Puestos = () => {
             valor: 'Marketing',
         },
         {
-            valor: 'Marketing',
+            valor: 'sales',
         },
     ];
+
+    //Obtener valor Dropdown
+    const [value, setValue] = useState("");
+    const handleChange = e => {
+        console.log(e);
+        return setValue(e.target.this.value)
+    };
 
     const puestos = [
         {
@@ -130,10 +137,11 @@ const Puestos = () => {
                     <Grid item>
                         <FormControl className={formControl}>
                             <InputLabel>Departamentos</InputLabel>
-                            <Select>
+                            <Select onChnage={handleChange}>
                                 {valoresDrop.map((item) => {
                                     return (
-                                        <MenuItem value={item.valor}>
+                                        <MenuItem 
+                                            value = {item.valor} >
                                             {item.valor}
                                         </MenuItem>
                                     );
@@ -142,7 +150,7 @@ const Puestos = () => {
                         </FormControl>
                     </Grid>
                 </Grid>
-
+                <Typography> {value} </Typography>
                 <Grid container className={containerMain} spacing={3}>
                     <Grid
                         item

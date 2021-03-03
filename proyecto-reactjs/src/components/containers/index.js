@@ -5,6 +5,7 @@ import Registro from './registro';
 import AdminInterface from './admin-interface';
 import ListaAplicantes from './lista-aplicantes';
 import CrearVacantes from './creacion-vacantes';
+import Nosotros from './nosotros'
 
 export {
     WelcomeScreen,
@@ -14,4 +15,5 @@ export {
     AdminInterface,
     ListaAplicantes,
     CrearVacantes,
+    Nosotros
 };
