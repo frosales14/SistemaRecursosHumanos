@@ -1,9 +1,19 @@
 import React from "react";
+import styled from "styled-components";
 import Layout from "../components/layout";
 import { Container, Grid, Button, Typography } from "@material-ui/core";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
+
+const Title = styled(Typography)`
+  font-family: Monserrat Bold;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  text-align: center;
+`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
   containerMain: {
     marginBottom: theme.spacing(6),
   },
-  titulo: {
-    fontSize: "2rem",
-  },
 }));
 
 const ListaAplicantes = () => {
-  const { root, titulo, containerMain } = useStyles();
+  const { root, containerMain } = useStyles();
 
   const [unchecked, setChecked] = React.useState(true);
 
@@ -60,7 +67,6 @@ const ListaAplicantes = () => {
       field: "visto",
       headerClassName: "headers",
       headerName: "VISTO",
-
       headerAlign: "center",
       renderCell: (params) => (
         <Checkbox
@@ -100,7 +106,7 @@ const ListaAplicantes = () => {
       <Container>
         <Grid item container justify="center" spacing={4}>
           <Grid item>
-            <Typography className={titulo}>APLICANTES</Typography>
+            <Title>APLICANTES</Title>
           </Grid>
         </Grid>
         <Grid
@@ -118,6 +124,7 @@ const ListaAplicantes = () => {
                 pageSize={5}
                 autoHeight="true"
                 disableSelectionOnClick="true"
+                disableColumnMenu="true"
                 components={{
                   Toolbar: GridToolbar,
                 }}

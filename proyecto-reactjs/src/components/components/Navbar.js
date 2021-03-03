@@ -17,6 +17,13 @@ const NavLink = styled.a`
   text-decoration: none;
 `;
 
+const NavItems = styled(Typography)`
+  font-family: Monserrat Regular;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1rem;
+`;
+
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -47,7 +54,7 @@ const Navbar = () => {
   const menu = [
     { name: "Inicio", path: "/" },
     { name: "Puestos", path: "/puestos" },
-    { name: "Nostros", path: "" },
+    { name: "Nosotros", path: "" },
     { name: "Como Aplicar", path: "" },
   ];
 
@@ -59,7 +66,7 @@ const Navbar = () => {
             <Toolbar>
               <Grid container alignItems="center" direction="row">
                 <Grid item md={3} lg={3}>
-                  <Typography variant="h6" className={classes.title}>
+                  <Typography className={classes.title}>
                     <img
                       className={classes.img}
                       src={comex}
@@ -77,7 +84,7 @@ const Navbar = () => {
                             color="primary"
                             className={classes.botonesNav}
                           >
-                            {item.name}
+                            <NavItems>{item.name}</NavItems>
                           </Button>
                         </NavLink>
                       </Grid>
