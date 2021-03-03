@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { Container, Grid, Button, Typography } from "@material-ui/core";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
+import axios from 'axios';
 
 const Title = styled(Typography)`
   font-family: Monserrat Bold;
@@ -46,10 +47,9 @@ const ListaAplicantes = () => {
       align: "center",
     },
     {
-      field: "telefono",
+      field: "vacante",
       headerClassName: "headers",
-      headerName: "TELÉFONO",
-      type: "number",
+      headerName: "VACANTE",
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -91,16 +91,24 @@ const ListaAplicantes = () => {
     },
   ];
 
-  const rows = [
-    { id: 1, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 2, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 3, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 4, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 5, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 6, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 7, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-    { id: 8, nombre: "Juan Perez", telefono: 98144565, puntuacion: 100 },
-  ];
+
+const baseUrl="http://localhost:4000/aplicantes-por-puntuacion";
+
+const [data, setData] = useState([]);
+
+const getData = async () => {
+  await axios.get (baseUrl)
+    .then(response=>{
+     setData(response.data);
+  }).catch(error=>{
+    console.log(error);
+  })
+}
+
+useEffect(() => {
+    getData()
+}, []);
+
   return (
     <Layout>
       <Container>
@@ -119,7 +127,7 @@ const ListaAplicantes = () => {
           <Grid item container md={12} xs={12}>
             <Grid item md={12} xs={12} sm={12} className={root}>
               <DataGrid
-                rows={rows}
+                rows={data}
                 columns={columns}
                 pageSize={5}
                 autoHeight="true"
@@ -136,5 +144,6 @@ const ListaAplicantes = () => {
     </Layout>
   );
 };
+
 
 export default ListaAplicantes;
