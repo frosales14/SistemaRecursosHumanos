@@ -92,6 +92,28 @@ app.get('/aplicantes-por-puntuacion', (req, res) => {
     });
 });
 
+app.get('/vacantes/add', (req, res) => {
+    {
+        const {
+            nombre,
+            descripcion,
+            departamento,
+            totalVacantes,
+            ciudad,
+            id,
+            admin,
+        } = req.query;
+        const INSERT_VACANTES_QUERY = `INSERT INTO vacante (nombre,descripcion,departamento,totalvacantes,ciudad,evaluacion_id,administrador_usuario) VALUES ('${nombre}', '${descripcion}', '${departamento}', '${totalVacantes}', '${ciudad}', '${id}', '${admin}')`;
+        connection.query(INSERT_VACANTES_QUERY, (err, result) => {
+            if (err) {
+                return res.send(err);
+            } else {
+                return res.send('vacante agregado exitosamente');
+            }
+        });
+    }
+});
+
 app.get('/vacantes', (req, res) => {
     connection.query(SELECT_VACANCIES, (err, results) => {
         if (err) {
