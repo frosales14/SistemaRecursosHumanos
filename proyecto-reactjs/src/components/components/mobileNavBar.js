@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Drawer, IconButton, Grid, Container } from '@material-ui/core';
+import {
+    Drawer,
+    IconButton,
+    Grid,
+    Container,
+    Typography,
+} from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import useScrollPosition from './hooks';
 import styled from 'styled-components';
 import { normalMonitor } from './common/sizes';
 import comex from '../imgs/comex.png';
 
-const MenuButton = styled(IconButton)``;
+const MenuButton = styled(IconButton)`
+    color: #00bff6;
+`;
+
+const NavLink = styled.a`
+    font-family: Monserrat Medium;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #00bff6;
+    font-weight: 500;
+    font-size: 1.2rem;
+`;
 
 const MobileHeader = styled.header`
     padding: ${(prop) => (prop.scrollPosition > 10 ? '10px 0' : '20px 0')};
@@ -57,9 +74,9 @@ const MobileNavBar = () => {
 
     const buttons = [
         { name: 'Inicio', path: '/' },
-        { name: 'Puestos', path: '' },
-        { name: 'Nosotros', path: '' },
-        { name: '¿Como Aplicar?', path: '' },
+        { name: 'Puestos', path: '/puestos' },
+        { name: 'Nosotros', path: '/nosotros' },
+        { name: '¿Como Aplicar?', path: '/nosotros' },
     ];
 
     return (
@@ -100,7 +117,11 @@ const MobileNavBar = () => {
                         </Grid>
                     </Grid>
                 </Container>
-                <Drawer open={mobileDrawer} onClose={toggleDrawer(false)}>
+                <Drawer
+                    open={mobileDrawer}
+                    onClose={toggleDrawer(false)}
+                    anchor="right"
+                >
                     <div
                         role="presentation"
                         style={{ width: '50vw', marginTop: '20%' }}
@@ -108,13 +129,17 @@ const MobileNavBar = () => {
                         onKeyDown={toggleDrawer(false)}
                     >
                         <MobileNav>
-                            <ul>
+                            <Grid container justify="center" spacing={4}>
                                 {buttons.map((button) => {
                                     return (
-                                        <li key={button.name}>{button.name}</li>
+                                        <Grid item xs={8}>
+                                            <NavLink href={button.path}>
+                                                {button.name}
+                                            </NavLink>
+                                        </Grid>
                                     );
                                 })}
-                            </ul>
+                            </Grid>
                         </MobileNav>
                     </div>
                 </Drawer>
