@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Layout from '../components/layout';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const NavLink = styled.a`
     text-decoration: none;
@@ -75,7 +76,7 @@ const Puestos = () => {
         papers,
         title,
         nombrePuesto,
-        infoPuesto,
+        infoDepto,
         infoVacantes,
         boton,
         textBoton,
@@ -97,21 +98,20 @@ const Puestos = () => {
     const [vacantes, setVacantes] = useState([]);
 
     const getVacantes = async () => {
-        const response = await fetch('http://localhost:4000/vacantes');
-        const body = await response.json();
-
-        if (response.status !== 200) {
-            throw Error(body.response);
-        }
-
-        return body;
+        
+       await axios.get('https://hr-server-js.herokuapp.com/vacantes')
+      .then((res)=>{setVacantes(
+        res.data.vacantes
+      )}
+      )  
+      .catch((err)=> {console.log(err)})
     };
 
     useEffect(() => {
         getVacantes()
-            .then((res) => setVacantes(res.vacantes))
-            .catch((err) => console.log(err));
     }, []);
+
+    console.log({vacantes})
 
     return (
         <Layout>
@@ -172,6 +172,12 @@ const Puestos = () => {
                                                 variant={'h6'}
                                             >
                                                 {vacante.ciudad}
+                                            </Typography>
+                                            <Typography
+                                                className={infoDepto}
+                                                variant={'h6'}
+                                            >
+                                                {vacante.departamento}
                                             </Typography>
                                         </Grid>
                                         <Grid item>
