@@ -11,7 +11,7 @@ dotenv.config();
 const SELECT_ALL_USERS_QUERY = 'SELECT * FROM administrador';
 const SELECT_ALL_APPLICANTS_QUERY = 'SELECT * FROM aplicante';
 const SELECT_APPLICANTS_BY_SCORE =
-    'SELECT apl.nombre, vac.nombre AS vacante, aple.puntuacion FROM aplicante AS apl INNER JOIN aplicantes_por_evaluacion AS aple ON apl.id = aple.aplicante_id INNER JOIN aplicantes_por_vacante AS aplv ON apl.id = aplv.vacante_id INNER JOIN vacante AS vac ON aplv.vacante_id = vac.id;';
+    'SELECT apl.id, apl.nombre, vac.nombre AS vacante, aple.puntuacion FROM aplicante AS apl INNER JOIN aplicantes_por_evaluacion AS aple ON apl.id = aple.aplicante_id INNER JOIN aplicantes_por_vacante AS aplv ON apl.id = aplv.vacante_id INNER JOIN vacante AS vac ON aplv.vacante_id = vac.id;';
 const SELECT_VACANCIES =
     'SELECT id, nombre, descripcion, totalvacantes, ciudad FROM vacante';
 const SELECT_VACANCIES_BY_AMOUNT =
@@ -86,10 +86,32 @@ app.get('/aplicantes-por-puntuacion', (req, res) => {
             return res.send(err);
         } else {
             return res.json({
-                data: results,
+                aplicantes: results,
             });
         }
     });
+});
+
+app.get('/vacantes/add', (req, res) => {
+    {
+        const {
+            nombre,
+            descripcion,
+            departamento,
+            totalVacantes,
+            ciudad,
+            id,
+            admin,
+        } = req.query;
+        const INSERT_VACANTES_QUERY = `INSERT INTO vacante (nombre,descripcion,departamento,totalvacantes,ciudad,evaluacion_id,administrador_usuario) VALUES ('${nombre}', '${descripcion}', '${departamento}', '${totalVacantes}', '${ciudad}', '${id}', '${admin}')`;
+        connection.query(INSERT_VACANTES_QUERY, (err, result) => {
+            if (err) {
+                return res.send(err);
+            } else {
+                return res.send('vacante agregado exitosamente');
+            }
+        });
+    }
 });
 
 app.get('/vacantes', (req, res) => {
