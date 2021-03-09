@@ -94,12 +94,12 @@ const CrearVacantes = () => {
             ciudad,
         });
         fetch(
-            `http://localhost:4000/vacantes/add?nombre=${nombre}&descripcion=${descripcion}&departamento=${departamento}&totalVacantes=${totalVacantes}&ciudad=${ciudad}&id=9&admin=carlos`,
+            `https://hr-server-js.herokuapp.com//vacantes/add?nombre=${nombre}&descripcion=${descripcion}&departamento=${departamento}&totalVacantes=${totalVacantes}&ciudad=${ciudad}&id=9&admin=carlos`,
             {
                 method: 'GET',
             }
         )
-            .then((res) => (window.location.href = '/'))
+            .then((res) => (window.location.href = '/admin-interface'))
             .catch((err) => console.log(err));
     };
 
