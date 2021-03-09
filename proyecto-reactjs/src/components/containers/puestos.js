@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
     Grid,
@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Layout from '../components/layout';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const NavLink = styled.a`
     text-decoration: none;
@@ -64,7 +65,25 @@ const ButtonFont = styled(Typography)`
     letter-spacing: 2.5px;
 `;
 
+const Header1 = styled(Typography)`
+    font-family: Monserrat Bold;
+    font-weight: 200;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+`;
+
+const Paragraph = styled(Typography)`
+    font-family: Monserrat Light;
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+`;
+
 const useStyles = makeStyles((theme) => ({
+    containerMain: {
+        marginBottom: theme.spacing(10),
+    },
     papers: {
         padding: theme.spacing(1),
         textAlign: 'center',
@@ -104,48 +123,50 @@ const Puestos = () => {
         formControl,
     } = useStyles();
 
-    const valoresDrop = [
-        {
-            valor: 'IT',
-        },
-        {
-            valor: 'Marketing',
-        },
-        {
-            valor: 'Marketing',
-        },
-    ];
+    const [puestos, setPuestos] = useState([]);
+    const [initialState, setInitialState] = useState([]);
+    const [filteredDep, setFilterDep] = useState([]);
+    const [dropdownValue, setDropdownValue] = useState('');
 
-    const puestos = [
-        {
-            titulo: 'Plaza 1',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-        {
-            titulo: 'Plaza 2',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-        {
-            titulo: 'Plaza 3',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-        {
-            titulo: 'Plaza 4',
-            descripcion:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac blandit leo. Sed efficitur nisi vel leo luctus, sed accumsan erat viverra. Curabitur facilisi ornare ultrices. Aenean ullamcorper egestasconvallis. Phasellus ut dui lacinia, facilisis risus non, tempor augue. Etiam magna felis, eleifend ac bibendum a, blandit ut justo. Class aptent taciti sociosqu ad  litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed semper  quam, sit amet consequat urna. Vestibulum vitae velit sit amet nisl vestibulum efficitur vitae ut enim.',
-            numVacantes: 'VACANTE DISPONIBLES',
-            hireDate: 'FECHA DE CONTRATACION',
-        },
-    ];
+    const removeDuplicatedArray = (array) => {
+        const duplicatedArray = array.map((a) => a.departamento);
+        const fixedArray = duplicatedArray.filter(
+            (a, b) => duplicatedArray.indexOf(a) === b
+        );
+        return fixedArray;
+    };
+
+    const departamentos = removeDuplicatedArray(initialState);
+
+    const handleDropdownChange = (event) => {
+        const value = event.target.value;
+        setDropdownValue(value);
+
+        const filteredDept = initialState.filter(
+            (a) => a.departamento === value
+        );
+        setPuestos(filteredDept);
+
+        if (value === 'All') {
+            setPuestos(initialState);
+        }
+    };
+
+    const getVacantes = async () => {
+        await axios
+            .get('https://hr-server-js.herokuapp.com/vacantes')
+            .then((res) => {
+                setInitialState(res.data.vacantes);
+                setPuestos(res.data.vacantes);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        getVacantes();
+    }, []);
 
     return (
         <Layout>
@@ -162,22 +183,33 @@ const Puestos = () => {
                             <InputLabel>
                                 <Dept>Departamentos</Dept>
                             </InputLabel>
-                            <Select>
-                                <Dept>
-                                    {valoresDrop.map((item) => {
-                                        return (
-                                            <MenuItem value={item.valor}>
-                                                {item.valor}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                </Dept>
+                            <Select
+                                value={dropdownValue}
+                                onChange={handleDropdownChange}
+                            >
+                                <MenuItem disabled value="">
+                                    <Dept>
+                                        <em>Departamentos</em>
+                                    </Dept>
+                                </MenuItem>
+                                <MenuItem value="All">
+                                    <Dept>
+                                        <em>All</em>
+                                    </Dept>
+                                </MenuItem>
+                                {departamentos.map((departamento) => {
+                                    return (
+                                        <MenuItem value={departamento}>
+                                            <Dept>{departamento}</Dept>
+                                        </MenuItem>
+                                    );
+                                })}
                             </Select>
                         </FormControl>
                     </Grid>
                 </Grid>
 
-                <Grid container spacing={3}>
+                <Grid container className={containerMain} spacing={3}>
                     <Grid
                         item
                         container
@@ -185,25 +217,32 @@ const Puestos = () => {
                         md={12}
                         xs={12}
                         direction="row"
+                        alignItems="center"
                     >
                         {puestos.map((puesto, index) => {
                             return (
                                 <Grid item key={index} md={3} xs={12} sm={6}>
                                     <Paper className={papers}>
                                         <Plazas className={nombrePuesto}>
-                                            {puesto.titulo}
+                                            {puesto.nombre}
                                         </Plazas>
+
                                         <Description>
                                             {puesto.descripcion}
                                         </Description>
-                                        <Grid item>
-                                            <Info1 className={infoVacantes}>
-                                                {puesto.numVacantes}
-                                            </Info1>
-                                            <Info1 className={infoVacantes}>
-                                                {puesto.hireDate}
-                                            </Info1>
-                                        </Grid>
+
+                                        <Info1 className={infoVacantes}>
+                                            {puesto.totalvacantes}
+                                        </Info1>
+
+                                        <Info1 className={infoVacantes}>
+                                            {puesto.ciudad}
+                                        </Info1>
+
+                                        <Info1 className={infoVacantes}>
+                                            {puesto.departamento}
+                                        </Info1>
+
                                         <Grid item>
                                             <NavLink href="/registro">
                                                 <Button
