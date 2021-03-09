@@ -6,7 +6,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { makeStyles } from "@material-ui/core/styles";
@@ -82,11 +82,44 @@ const Cuestionario = () => {
     input,
   } = useStyles();
 
-  const valoresDrop = [
+  const preguntas = [
+    {
+      pregunta: 'Pregunta 1'
+    },
+    {
+      pregunta: 'Pregunta 2'
+    },
+    {
+      pregunta: 'Pregunta 3'
+    },
+    {
+      pregunta: 'Pregunta 4'
+    },
+    {
+      pregunta: 'Pregunta 5'
+    },
+    {
+      pregunta: 'Pregunta 6'
+    },
+    {
+      pregunta: 'Pregunta 7'
+    }
+  ];
+  
+  
+  const dropDownValue = [
     { valor: "Mario" },
     { valor: "José" },
     { valor: "Andrés" },
   ];
+
+
+  const [value, setDropDownValue] = useState('');
+  const handleDropdownChange = (event) => {
+    const value = event.target.value;
+    setDropDownValue(value);
+    console.log(value);
+  }
   return (
     <Layout>
       <Container>
@@ -116,18 +149,31 @@ const Cuestionario = () => {
               </Title2>
             </Grid>
           </Grid>
-
-          <Grid item container md={10} xs={12} className={gridPreguntas}>
-            <Grid item md={12} xs={12} sm={12}>
-              <Pregunta>¿Cuál es su nombre?</Pregunta>
-              <FormControl variant="outlined" fullWidth className={formControl}>
-                <Select>
-                  {valoresDrop.map((item) => {
-                    return <MenuItem value={item.valor}>{item.valor}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
+        
+          <Grid item container 
+                md={10} 
+                xs={12} 
+                className={gridPreguntas}>
+            {preguntas.map((pregunta) => {
+              return(
+                      <Grid item md={12} xs={12} sm={12}>
+                        <Pregunta>{pregunta.pregunta}</Pregunta>
+                        <FormControl variant="outlined" fullWidth className={formControl}>
+                          <Select
+                              onChange={handleDropdownChange}>
+                            {dropDownValue.map((item) => {
+                              return  (
+                                        <MenuItem 
+                                            value={item.valor}>
+                                            {item.valor}
+                                        </MenuItem>
+                                      );
+                            })}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    );
+            })}
             <Grid item container justify="center">
               <input
                 accept=".docx"
