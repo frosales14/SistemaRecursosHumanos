@@ -6,14 +6,19 @@ import {
     Select,
     MenuItem,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Layout from '../components/layout';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 import { CloudinaryContext, Image } from 'cloudinary-react';
 import { fetchPhotos, openUploadWidget } from '../../CloudinaryService';
+
+const NavLink = styled.a`
+    text-decoration: none;
+`;
 
 const Title = styled(Typography)`
     font-family: Monserrat Bold;
@@ -86,39 +91,9 @@ const Cuestionario = () => {
         input,
     } = useStyles();
 
-    const preguntas = [
-        {
-            pregunta: 'Pregunta 1',
-        },
-        {
-            pregunta: 'Pregunta 2',
-        },
-        {
-            pregunta: 'Pregunta 3',
-        },
-        {
-            pregunta: 'Pregunta 4',
-        },
-        {
-            pregunta: 'Pregunta 5',
-        },
-        {
-            pregunta: 'Pregunta 6',
-        },
-        {
-            pregunta: 'Pregunta 7',
-        },
-    ];
-
-    const dropDownValue = [
-        { valor: 'Mario' },
-        { valor: 'José' },
-        { valor: 'Andrés' },
-    ];
+    const [cuestionario, setCuestionario] = useState([]);
 
     const [value, setDropDownValue] = useState('');
-    const [selectedFile, setSelectedFile] = useState();
-    const [isFilePicked, setIsFilePicked] = useState(false);
 
     const handleDropdownChange = (event) => {
         const value = event.target.value;
@@ -126,15 +101,20 @@ const Cuestionario = () => {
         console.log(value);
     };
 
-    const changeHandler = (event) => {
-        console.log(event);
-        // setSelectedFile(event.target.files[0]);
-        // setIsFilePicked(true);
+    const getCuestionario = async () => {
+        await axios
+            .get('https://hr-server-js.herokuapp.com/pregunta')
+            .then((response) => {
+                setCuestionario(response.data.preguntas);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
-    const handleSubmission = () => {
-        console.log('handle');
-    };
+    useEffect(() => {
+        getCuestionario();
+    }, []);
 
     const [images, setImages] = useState([]);
 
@@ -201,7 +181,7 @@ const Cuestionario = () => {
                         xs={12}
                         className={gridPreguntas}
                     >
-                        {preguntas.map((pregunta) => {
+                        {cuestionario.map((pregunta) => {
                             return (
                                 <Grid item md={12} xs={12} sm={12}>
                                     <Pregunta>{pregunta.pregunta}</Pregunta>
@@ -211,38 +191,62 @@ const Cuestionario = () => {
                                         className={formControl}
                                     >
                                         <Select onChange={handleDropdownChange}>
-                                            {dropDownValue.map((item) => {
-                                                return (
-                                                    <MenuItem
-                                                        value={item.valor}
-                                                    >
-                                                        {item.valor}
-                                                    </MenuItem>
-                                                );
-                                            })}
+                                            <MenuItem
+                                                value={pregunta.respuesta}
+                                            >
+                                                {pregunta.respuesta}
+                                            </MenuItem>
+                                            <MenuItem
+                                                value={pregunta.respuesta2}
+                                            >
+                                                {pregunta.respuesta2}
+                                            </MenuItem>
+                                            <MenuItem
+                                                value={pregunta.respuesta3}
+                                            >
+                                                {pregunta.respuesta3}
+                                            </MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid>
                             );
                         })}
-                        <Grid item container justify="center">
-                            <CloudinaryContext cloudName="dgauerlpt">
-                                <Button
-                                    className={boton}
-                                    variant="contained"
-                                    color="secondary"
-                                    disableElevation
-                                    size="large"
-                                    component="span"
-                                >
-                                    <ButtonFont
-                                        className={textBoton}
-                                        onClick={() => beginUpload('image')}
+                        <Grid item container alignItems="center" spacing={3}>
+                            <Grid item>
+                                <CloudinaryContext cloudName="dgauerlpt">
+                                    <Button
+                                        className={boton}
+                                        variant="contained"
+                                        color="secondary"
+                                        disableElevation
+                                        size="large"
+                                        component="span"
                                     >
-                                        CARGAR CV
-                                    </ButtonFont>
-                                </Button>
-                            </CloudinaryContext>
+                                        <ButtonFont
+                                            className={textBoton}
+                                            onClick={() => beginUpload('image')}
+                                        >
+                                            CARGAR CV
+                                        </ButtonFont>
+                                    </Button>
+                                </CloudinaryContext>
+                            </Grid>
+                            <Grid item>
+                                <NavLink href="/">
+                                    <Button
+                                        className={boton}
+                                        variant="contained"
+                                        color="secondary"
+                                        disableElevation
+                                        size="large"
+                                        component="span"
+                                    >
+                                        <ButtonFont className={textBoton}>
+                                            ENVIAR
+                                        </ButtonFont>
+                                    </Button>
+                                </NavLink>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
