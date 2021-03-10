@@ -12,8 +12,8 @@ import Layout from '../components/layout';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import { CloudinaryContext, Image } from "cloudinary-react";
-import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
+import { CloudinaryContext, Image } from 'cloudinary-react';
+import { fetchPhotos, openUploadWidget } from '../../CloudinaryService';
 
 const Title = styled(Typography)`
     font-family: Monserrat Bold;
@@ -47,6 +47,7 @@ const ButtonFont = styled(Typography)`
     text-transform: uppercase;
     font-size: 1.1rem;
     letter-spacing: 2px;
+    cursor: pointer;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -135,27 +136,26 @@ const Cuestionario = () => {
         console.log('handle');
     };
 
-
     const [images, setImages] = useState([]);
 
-    const beginUpload = tag => {
+    const beginUpload = (tag) => {
         const uploadOptions = {
-          cloudName: "dgauerlpt",
-          tags: [tag],
-          uploadPreset: "upload"
+            cloudName: 'dgauerlpt',
+            tags: [tag],
+            uploadPreset: 'upload',
         };
-      
+
         openUploadWidget(uploadOptions, (error, photos) => {
-          if (!error) {
-            console.log(photos);
-            if(photos.event === 'success'){
-              setImages([...images, photos.info.public_id])
+            if (!error) {
+                console.log(photos);
+                if (photos.event === 'success') {
+                    setImages([...images, photos.info.public_id]);
+                }
+            } else {
+                console.log(error);
             }
-          } else {
-            console.log(error);
-          }
-        })
-      }
+        });
+    };
 
     return (
         <Layout>
@@ -226,56 +226,27 @@ const Cuestionario = () => {
                             );
                         })}
                         <Grid item container justify="center">
-                            <input
-                                accept=".docx"
-                                className={input}
-                                id="boton-file-upload"
-                                type="file"
-                            />
-                            <label htmlFor="boton-file-upload">
-                                {/* <Button
-                  className={boton}
-                  variant="contained"
-                  color="secondary"
-                  disableElevation
-                  size="large"
-                  component="span"
-                >
-                  <ButtonFont className={textBoton}>CARGAR CV</ButtonFont>
-                </Button> */}
-                                <div>
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        onChange={changeHandler}
-                                    />
-                                    <div>
-                                        <button onClick={() => beginUpload()}>
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </label>
+                            <CloudinaryContext cloudName="dgauerlpt">
+                                <Button
+                                    className={boton}
+                                    variant="contained"
+                                    color="secondary"
+                                    disableElevation
+                                    size="large"
+                                    component="span"
+                                >
+                                    <ButtonFont
+                                        className={textBoton}
+                                        onClick={() => beginUpload('image')}
+                                    >
+                                        CARGAR CV
+                                    </ButtonFont>
+                                </Button>
+                            </CloudinaryContext>
                         </Grid>
                     </Grid>
                 </Grid>
             </Container>
-
-            <section>
-                <CloudinaryContext cloudName="dgauerlpt">
-                    <div className="App">
-                        <button onClick={() => beginUpload("image")}>Upload Image</button>
-                    <section>
-                        {images.map(i => <Image
-                            key={i}
-                            publicId={i}
-                            fetch-format="auto"
-                            quality="auto"
-                            />)}
-                    </section>
-                    </div>
-                </CloudinaryContext>
-            </section>
         </Layout>
     );
 };
