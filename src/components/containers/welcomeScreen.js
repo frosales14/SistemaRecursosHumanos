@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+//Componente Homescreen
 const WelcomeScreen = () => {
     const {
         textoPrincipal,

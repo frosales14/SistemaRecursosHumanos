@@ -101,7 +101,8 @@ const ListaAplicantes = () => {
         },
     ];
 
-    const baseUrl = 'http://localhost:4000/aplicantes-por-puntuacion';
+    const baseUrl =
+        'https://hr-server-js.herokuapp.com/aplicantes-por-puntuacion';
 
     const [data, setData] = useState([]);
 

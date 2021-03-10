@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
         <ThemeProvider theme={theme}>
             <GlobalStyles />
             <Navbar />
-            <Wrapper>
+            <Wrapper style={{ marginBottom: '80px' }}>
                 <main>{children}</main>
             </Wrapper>
             <Footer />
