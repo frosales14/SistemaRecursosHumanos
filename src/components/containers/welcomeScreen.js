@@ -85,7 +85,7 @@ const WelcomeScreen = () => {
     return (
         <Layout>
             <Container fixed max-width="xl">
-                <Grid container sapcing={2} alignItems="center">
+                <Grid container spacing={2} alignItems="center">
                     <Grid item container spacing={2} xs={12} md={6} lg={6}>
                         <Grid item>
                             <Header1>
@@ -97,15 +97,17 @@ const WelcomeScreen = () => {
                         </Grid>
                         <Grid item container alignItems="center">
                             <Grid item>
-                                <SecondaryButton
-                                    className={boton}
-                                    variant="outlined"
-                                    color="secondary"
-                                    disableElevation
-                                    size="large"
-                                >
-                                    MAS INFO
-                                </SecondaryButton>
+                                <NavLink href="/nosotros">
+                                    <SecondaryButton
+                                        className={boton}
+                                        variant="outlined"
+                                        color="secondary"
+                                        disableElevation
+                                        size="large"
+                                    >
+                                        MAS INFO
+                                    </SecondaryButton>
+                                </NavLink>
                             </Grid>
                             <Grid item>
                                 <NavLink href="/puestos">
