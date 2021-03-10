@@ -12,6 +12,9 @@ import Layout from '../components/layout';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import { CloudinaryContext, Image } from "cloudinary-react";
+import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
+
 const Title = styled(Typography)`
     font-family: Monserrat Bold;
     font-weight: 600;
@@ -132,6 +135,28 @@ const Cuestionario = () => {
         console.log('handle');
     };
 
+
+    const [images, setImages] = useState([]);
+
+    const beginUpload = tag => {
+        const uploadOptions = {
+          cloudName: "dgauerlpt",
+          tags: [tag],
+          uploadPreset: "upload"
+        };
+      
+        openUploadWidget(uploadOptions, (error, photos) => {
+          if (!error) {
+            console.log(photos);
+            if(photos.event === 'success'){
+              setImages([...images, photos.info.public_id])
+            }
+          } else {
+            console.log(error);
+          }
+        })
+      }
+
     return (
         <Layout>
             <Container>
@@ -225,7 +250,7 @@ const Cuestionario = () => {
                                         onChange={changeHandler}
                                     />
                                     <div>
-                                        <button onClick={handleSubmission}>
+                                        <button onClick={() => beginUpload()}>
                                             Submit
                                         </button>
                                     </div>
@@ -235,6 +260,22 @@ const Cuestionario = () => {
                     </Grid>
                 </Grid>
             </Container>
+
+            <section>
+                <CloudinaryContext cloudName="dgauerlpt">
+                    <div className="App">
+                        <button onClick={() => beginUpload("image")}>Upload Image</button>
+                    <section>
+                        {images.map(i => <Image
+                            key={i}
+                            publicId={i}
+                            fetch-format="auto"
+                            quality="auto"
+                            />)}
+                    </section>
+                    </div>
+                </CloudinaryContext>
+            </section>
         </Layout>
     );
 };
