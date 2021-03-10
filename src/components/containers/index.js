@@ -7,6 +7,7 @@ import ListaAplicantes from './lista-aplicantes';
 import CrearVacantes from './creacion-vacantes';
 import Nosotros from './nosotros';
 import PageNotFound from './page-not-found';
+import Cuestionario from './cuestionario';
 
 export {
     WelcomeScreen,
@@ -18,4 +19,5 @@ export {
     CrearVacantes,
     Nosotros,
     PageNotFound,
+    Cuestionario,
 };

@@ -17,6 +17,7 @@ import {
     ListaAplicantes,
     CrearVacantes,
     Nosotros,
+    Cuestionario,
     PageNotFound,
 } from '../containers';
 import useToken from '../components/hooks/useToken';
@@ -35,6 +36,7 @@ const AppRoutes = () => {
                 <Route path="/lista-aplicantes" component={ListaAplicantes} />
                 <Route path="/creacion-vacantes" component={CrearVacantes} />
                 <Route path="/nosotros" component={Nosotros} />
+                <Route path="/cuestionario" component={Cuestionario} />
                 <Route component={PageNotFound} />
             </Switch>
         );
