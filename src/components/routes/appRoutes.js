@@ -16,10 +16,10 @@ import {
     AdminInterface,
     ListaAplicantes,
     CrearVacantes,
-    Nosotros
+    Nosotros,
+    PageNotFound,
 } from '../containers';
 import useToken from '../components/hooks/useToken';
-
 
 const browserHistory = createBrowserHistory();
 
@@ -35,6 +35,7 @@ const AppRoutes = () => {
                 <Route path="/lista-aplicantes" component={ListaAplicantes} />
                 <Route path="/creacion-vacantes" component={CrearVacantes} />
                 <Route path="/nosotros" component={Nosotros} />
+                <Route component={PageNotFound} />
             </Switch>
         );
     };
