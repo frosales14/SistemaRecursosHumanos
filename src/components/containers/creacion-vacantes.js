@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, Container, Typography, Button, Input } from '@material-ui/core';
+import {
+    Grid,
+    Container,
+    Typography,
+    Button,
+    Input,
+    TextField,
+} from '@material-ui/core';
 import styled from 'styled-components';
 import Layout from '../components/layout';
 import { mobileScreen } from '../components/common/sizes';
@@ -44,10 +51,11 @@ const CustomInput = styled(Input)`
     border-radius: 15px;
 `;
 
-const DescInput = styled(Input)`
+const DescInput = styled.textarea`
     font-family: Monserrat Semi Bold;
     background-color: #02ddfb;
     height: 150px;
+    width: 100%;
     font-size: 15px;
     border-radius: 15px;
 `;
@@ -94,7 +102,7 @@ const CrearVacantes = () => {
             ciudad,
         });
         fetch(
-            `https://hr-server-js.herokuapp.com//vacantes/add?nombre=${nombre}&descripcion=${descripcion}&departamento=${departamento}&totalVacantes=${totalVacantes}&ciudad=${ciudad}&id=9&admin=carlos`,
+            `https://hr-server-js.herokuapp.com/vacantes/add?nombre=${nombre}&descripcion=${descripcion}&departamento=${departamento}&totalVacantes=${totalVacantes}&ciudad=${ciudad}`,
             {
                 method: 'GET',
             }
