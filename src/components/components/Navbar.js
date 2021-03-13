@@ -54,7 +54,7 @@ const Navbar = () => {
     const menu = [
         { name: 'Inicio', path: '/' },
         { name: 'Puestos', path: '/puestos' },
-        { name: 'Nostros', path: '/nosotros' },
+        { name: 'Nosotros', path: '/nosotros' },
     ];
 
     return (
