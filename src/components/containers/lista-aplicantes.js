@@ -92,10 +92,8 @@ const ListaAplicantes = () => {
         },
     ];
 
-    // const baseUrl =
-    //     'https://hr-server-js.herokuapp.com/aplicantes-por-puntuacion';
-
-    const baseUrl = 'http://localhost:4000/aplicantes-por-puntuacion';
+    const baseUrl =
+        'https://hr-server-js.herokuapp.com/aplicantes-por-puntuacion';
 
     const [aplicantes, setAplicantes] = useState([]);
 
@@ -113,8 +111,6 @@ const ListaAplicantes = () => {
     useEffect(() => {
         getData();
     }, []);
-
-    console.log({ aplicantes });
 
     return (
         <Layout>
