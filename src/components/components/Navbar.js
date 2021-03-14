@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
     AppBar,
@@ -7,6 +7,9 @@ import {
     makeStyles,
     Hidden,
     Container,
+    Popper,
+    Paper,
+    Fade,
 } from '@material-ui/core';
 import { Grid, Button } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
@@ -22,6 +25,7 @@ const NavItems = styled(Typography)`
     font-weight: 600;
     text-transform: uppercase;
     font-size: 1rem;
+    cursor: pointer;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -51,11 +55,26 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
     const classes = useStyles();
 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+    };
+
+    const toggleSignOut = () => {
+        localStorage.setItem('userSession', null);
+        window.location.href = '/';
+    };
+
     const menu = [
         { name: 'Inicio', path: '/' },
         { name: 'Puestos', path: '/puestos' },
         { name: 'Nosotros', path: '/nosotros' },
     ];
+
+    const userSession = JSON.parse(localStorage.getItem('userSession'));
+
+    const open = Boolean(anchorEl);
 
     return (
         <div>
@@ -98,13 +117,53 @@ const Navbar = () => {
                                             </Grid>
                                         );
                                     })}
+                                    <Grid item>
+                                        {userSession !== null ? (
+                                            <NavLink href="/admin-interface">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    className={
+                                                        classes.botonesNav
+                                                    }
+                                                >
+                                                    <NavItems>
+                                                        Dashboard
+                                                    </NavItems>
+                                                </Button>
+                                            </NavLink>
+                                        ) : null}
+                                    </Grid>
                                 </Grid>
                                 <Grid item md={1} lg={1}>
-                                    <NavLink href="/login">
-                                        <AccountCircle
-                                            className={classes.loginIcon}
-                                        />
-                                    </NavLink>
+                                    {userSession === null ? (
+                                        <NavLink href="/login">
+                                            <AccountCircle
+                                                className={classes.loginIcon}
+                                            />
+                                        </NavLink>
+                                    ) : (
+                                        <>
+                                            <AccountCircle
+                                                className={classes.loginIcon}
+                                                onClick={handleClick}
+                                            />
+                                            <Popper
+                                                open={open}
+                                                anchorEl={anchorEl}
+                                                style={{ marginTop: '20px' }}
+                                            >
+                                                <Paper>
+                                                    <NavItems
+                                                        color="primary"
+                                                        onClick={toggleSignOut}
+                                                    >
+                                                        Cerrar sesion
+                                                    </NavItems>
+                                                </Paper>
+                                            </Popper>
+                                        </>
+                                    )}
                                 </Grid>
                             </Grid>
                         </Toolbar>
