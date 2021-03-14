@@ -74,8 +74,6 @@ const Navbar = () => {
 
     const userSession = JSON.parse(localStorage.getItem('userSession'));
 
-    console.log({ userSession });
-
     const open = Boolean(anchorEl);
 
     return (
