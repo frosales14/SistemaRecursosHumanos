@@ -81,6 +81,8 @@ const Login = () => {
         setPassword(e.target.value.toLowerCase().trim());
     };
 
+    console.log({ users });
+
     const onLoginSumbit = () => {
         users.map((user) => {
             if (user.usuario !== username && user.contrasena !== password) {
