@@ -60,12 +60,7 @@ const Login = () => {
 
     const getUsers = async () => {
         await axios
-            // .get(`https://hr-server-js.herokuapp.com/users`)
-            // .then((res) => {
-            //     setUsers(res.data);
-            // })
-            // .catch((err) => console.error(err));
-            .get(`http://localhost:4000/users`)
+            .get(`https://hr-server-js.herokuapp.com/users`)
             .then((res) => {
                 setUsers(res.data.users);
             })
@@ -93,7 +88,7 @@ const Login = () => {
             } else {
                 setCorrectUser(true);
                 fetch(
-                    `http://localhost:4000/users/add-session?usuario=${username}&session=${1}`,
+                    `https://hr-server-js.herokuapp.com/users/add-session?usuario=${username}&session=${1}`,
                     {
                         method: 'GET',
                     }
@@ -102,10 +97,10 @@ const Login = () => {
                     'userSession',
                     JSON.stringify({
                         user: username,
-                        session: 1,
+                        session: true,
                     })
                 );
-                window.location.href = '/admin-interface';
+                window.location.href = '/';
             }
         });
     };

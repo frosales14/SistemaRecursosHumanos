@@ -9,7 +9,7 @@ import {
     Container,
     Popper,
     Paper,
-    Fade,
+    Divider,
 } from '@material-ui/core';
 import { Grid, Button } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
@@ -73,6 +73,8 @@ const Navbar = () => {
     ];
 
     const userSession = JSON.parse(localStorage.getItem('userSession'));
+
+    console.log({ userSession });
 
     const open = Boolean(anchorEl);
 
@@ -153,7 +155,14 @@ const Navbar = () => {
                                                 anchorEl={anchorEl}
                                                 style={{ marginTop: '20px' }}
                                             >
-                                                <Paper>
+                                                <Paper
+                                                    elevation={3}
+                                                    style={{ padding: '10px' }}
+                                                >
+                                                    <NavItems color="primary">
+                                                        {userSession.user}
+                                                    </NavItems>
+                                                    <Divider variant="middle" />
                                                     <NavItems
                                                         color="primary"
                                                         onClick={toggleSignOut}
