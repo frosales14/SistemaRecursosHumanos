@@ -20,7 +20,7 @@ import {
     Cuestionario,
     PageNotFound,
 } from '../containers';
-import useToken from '../components/hooks/useToken';
+import { PrivateRoute } from './privateRoutes';
 
 const browserHistory = createBrowserHistory();
 
@@ -32,11 +32,23 @@ const AppRoutes = () => {
                 <Route path="/login" component={Login} />
                 <Route path="/puestos" component={Puestos} />
                 <Route path="/registro" component={Registro} />
-                <Route path="/admin-interface" component={AdminInterface} />
-                <Route path="/lista-aplicantes" component={ListaAplicantes} />
-                <Route path="/creacion-vacantes" component={CrearVacantes} />
                 <Route path="/nosotros" component={Nosotros} />
                 <Route path="/cuestionario" component={Cuestionario} />
+                <PrivateRoute
+                    exact
+                    path="/admin-interface"
+                    component={AdminInterface}
+                />
+                <PrivateRoute
+                    exact
+                    path="/lista-aplicantes"
+                    component={ListaAplicantes}
+                />
+                <PrivateRoute
+                    exact
+                    path="/creacion-vacantes"
+                    component={CrearVacantes}
+                />
                 <Route component={PageNotFound} />
             </Switch>
         );
