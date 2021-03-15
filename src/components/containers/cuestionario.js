@@ -117,6 +117,7 @@ const Cuestionario = () => {
     }, []);
 
     const [images, setImages] = useState([]);
+    let url;
 
     const beginUpload = (tag) => {
         const uploadOptions = {
@@ -124,7 +125,6 @@ const Cuestionario = () => {
             tags: [tag],
             uploadPreset: 'upload',
         };
-
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
                 console.log(photos);
@@ -243,6 +243,20 @@ const Cuestionario = () => {
                                     >
                                         <ButtonFont className={textBoton}>
                                             ENVIAR
+                                        </ButtonFont>
+                                    </Button>
+                                </NavLink>
+                                <NavLink href= {`https://res.cloudinary.com/dgauerlpt/image/upload/fl_attachment:cv/url.jpg`}>
+                                    <Button
+                                        className={boton}
+                                        variant="contained"
+                                        color="secondary"
+                                        disableElevation
+                                        size="large"
+                                        component="span"
+                                    >
+                                        <ButtonFont className={textBoton}>
+                                            DESC
                                         </ButtonFont>
                                     </Button>
                                 </NavLink>
