@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
     Grid,
@@ -14,6 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import Layout from '../components/layout';
 import { mobileScreen } from '../components/common/sizes';
+import axios from 'axios';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variante="filled" {...props} />;
@@ -55,17 +56,20 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [incorrectUser, setIncorrectUser] = useState(false);
     const [correctUser, setCorrectUser] = useState(false);
-    const [userSession, setUserSession] = useState(false);
-    const [users, setUsers] = useState([
-        {
-            name: 'carlos@email.com',
-            password: 'password',
-        },
-        {
-            name: 'melvin@email.com',
-            password: 'password',
-        },
-    ]);
+    const [users, setUsers] = useState([]);
+
+    const getUsers = async () => {
+        await axios
+            .get(`https://hr-server-js.herokuapp.com/users`)
+            .then((res) => {
+                setUsers(res.data.users);
+            })
+            .catch((err) => console.error(err));
+    };
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     const onUserInputChange = (e) => {
         e.preventDefault();
@@ -79,10 +83,24 @@ const Login = () => {
 
     const onLoginSumbit = () => {
         users.map((user) => {
-            if (user.name !== username && user.password !== password) {
+            if (user.usuario !== username && user.contrasena !== password) {
                 setIncorrectUser(true);
             } else {
                 setCorrectUser(true);
+                fetch(
+                    `https://hr-server-js.herokuapp.com/users/add-session?usuario=${username}&session=${1}`,
+                    {
+                        method: 'GET',
+                    }
+                ).catch((err) => console.error(err));
+                localStorage.setItem(
+                    'userSession',
+                    JSON.stringify({
+                        user: username,
+                        session: true,
+                    })
+                );
+                window.location.href = '/';
             }
         });
     };
@@ -156,9 +174,5 @@ const Login = () => {
         </Layout>
     );
 };
-
-// Login.propTypes = {
-//     setToken: PropTypes.func.isRequired,
-// };
 
 export default Login;
