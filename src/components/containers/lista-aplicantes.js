@@ -7,6 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
 
+const NavLink = styled.a`
+    text-decoration: none;
+    width: 100%;
+`;
+
 const Title = styled(Typography)`
     font-family: Monserrat Bold;
     font-weight: 700;
@@ -32,10 +37,6 @@ const ListaAplicantes = () => {
 
     const [unchecked, setChecked] = React.useState(true);
 
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
-
     const columns = [
         {
             field: 'id',
@@ -52,9 +53,9 @@ const ListaAplicantes = () => {
             align: 'center',
         },
         {
-            field: 'vacante',
+            field: 'tel',
             headerClassName: 'headers',
-            headerName: 'VACANTE',
+            headerName: 'TELEFONO',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
@@ -69,17 +70,12 @@ const ListaAplicantes = () => {
             align: 'center',
         },
         {
-            field: 'visto',
+            field: 'vacante',
             headerClassName: 'headers',
-            headerName: 'VISTO',
+            headerName: 'VACANTE',
+            flex: 1,
             headerAlign: 'center',
-            renderCell: (params) => (
-                <Checkbox
-                    align="center"
-                    unchecked={unchecked}
-                    onChange={handleChange}
-                />
-            ),
+            align: 'center',
         },
         {
             field: 'cv',
@@ -89,14 +85,18 @@ const ListaAplicantes = () => {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    fullWidth
+                <NavLink
+                    href={`https://res.cloudinary.com/dgauerlpt/raw/upload/fl_attachment:cv/${params.row.URL}`}
                 >
-                    VER
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        fullWidth
+                    >
+                        VER
+                    </Button>
+                </NavLink>
             ),
         },
     ];
@@ -104,13 +104,13 @@ const ListaAplicantes = () => {
     const baseUrl =
         'https://hr-server-js.herokuapp.com/aplicantes-por-puntuacion';
 
-    const [data, setData] = useState([]);
+    const [aplicantes, setAplicantes] = useState([]);
 
     const getData = async () => {
         await axios
             .get(baseUrl)
             .then((response) => {
-                setData(response.data.aplicantes);
+                setAplicantes(response.data.aplicantes);
             })
             .catch((error) => {
                 console.log(error);
@@ -120,8 +120,6 @@ const ListaAplicantes = () => {
     useEffect(() => {
         getData();
     }, []);
-
-    console.log({ data });
 
     return (
         <Layout>
@@ -141,9 +139,9 @@ const ListaAplicantes = () => {
                     <Grid item container md={12} xs={12}>
                         <Grid item md={12} xs={12} sm={12} className={root}>
                             <DataGrid
-                                rows={data}
+                                rows={aplicantes}
                                 columns={columns}
-                                pageSize={5}
+                                pageSize={10}
                                 autoHeight="true"
                                 disableSelectionOnClick="true"
                                 disableColumnMenu="true"

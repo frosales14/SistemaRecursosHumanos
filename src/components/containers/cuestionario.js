@@ -88,17 +88,42 @@ const Cuestionario = () => {
         formControl,
         boton,
         textBoton,
-        input,
     } = useStyles();
 
     const [cuestionario, setCuestionario] = useState([]);
+    const [counter, setCounter] = useState(0);
+    const [currentAplicante, setCurrentAplicante] = useState([]);
 
-    const [value, setDropDownValue] = useState('');
+    let contador = 0;
 
     const handleDropdownChange = (event) => {
+        event.preventDefault();
         const value = event.target.value;
-        setDropDownValue(value);
-        console.log(value);
+
+        cuestionario.map((pregunta) => {
+            if (value === pregunta.respuesta_correcta) {
+                contador += 10;
+            }
+        });
+    };
+
+    const nombre = localStorage.getItem('nombre_aplicante');
+    const vacante = JSON.parse(localStorage.getItem('puesto_seleccionado'));
+
+    const sendForm = () => {
+        fetch(
+            `https://hr-server-js.herokuapp.com/aplicantes/add-puntuacion?nombre=${nombre}&puntuacion=${counter}&url='${images[0]}'`,
+            {
+                method: 'GET',
+            }
+        ).catch((err) => console.error(err));
+
+        fetch(
+            `https://hr-server-js.herokuapp.com/aplicante/add-evaluacion?aplicanteId=${currentAplicante[0].id}&vacanteId=${vacante.id}`,
+            {
+                method: 'GET',
+            }
+        ).catch((err) => console.error(err));
     };
 
     const getCuestionario = async () => {
@@ -112,11 +137,27 @@ const Cuestionario = () => {
             });
     };
 
+    const getCurrentAplicante = async () => {
+        await axios
+            .get(
+                `https://hr-server-js.herokuapp.com/aplicante?nombre=${nombre}`
+            )
+            .then((response) => {
+                setCurrentAplicante(response.data.aplicante);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     useEffect(() => {
         getCuestionario();
+        getCurrentAplicante();
     }, []);
 
     const [images, setImages] = useState([]);
+
+    let url;
 
     const beginUpload = (tag) => {
         const uploadOptions = {
@@ -124,12 +165,11 @@ const Cuestionario = () => {
             tags: [tag],
             uploadPreset: 'upload',
         };
-
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     setImages([...images, photos.info.public_id]);
+                    setCounter(contador);
                 }
             } else {
                 console.log(error);
@@ -192,9 +232,11 @@ const Cuestionario = () => {
                                     >
                                         <Select onChange={handleDropdownChange}>
                                             <MenuItem
-                                                value={pregunta.respuesta}
+                                                value={
+                                                    pregunta.respuesta_correcta
+                                                }
                                             >
-                                                {pregunta.respuesta}
+                                                {pregunta.respuesta_correcta}
                                             </MenuItem>
                                             <MenuItem
                                                 value={pregunta.respuesta2}
@@ -240,6 +282,7 @@ const Cuestionario = () => {
                                         disableElevation
                                         size="large"
                                         component="span"
+                                        onClick={sendForm}
                                     >
                                         <ButtonFont className={textBoton}>
                                             ENVIAR

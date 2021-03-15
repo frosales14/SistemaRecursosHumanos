@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
     Grid,
@@ -106,6 +106,36 @@ const Registro = () => {
         boton,
         textBoton,
     } = useStyles();
+
+    const [nombre, setNombre] = useState('');
+    const [telefono, setTelefono] = useState('');
+
+    const handleAplicante = (event) => {
+        const value = event.target.value;
+        setNombre(value);
+        console.log({ value });
+    };
+
+    const handleTelefono = (event) => {
+        const value = event.target.value;
+        setTelefono(value);
+        console.log({ value });
+    };
+
+    const addAplicante = () => {
+        fetch(
+            `https://hr-server-js.herokuapp.com/aplicantes/add?nombre=${nombre}&telefono=${telefono}`,
+            {
+                method: 'GET',
+            }
+        ).catch((err) => console.error(err));
+
+        localStorage.setItem('nombre_aplicante', nombre);
+    };
+
+    const vacante = JSON.parse(localStorage.getItem('puesto_seleccionado'));
+    console.log({ vacante });
+
     return (
         <Layout>
             <Container fixed max-width="xl">
@@ -156,7 +186,7 @@ const Registro = () => {
                                             </FormInputs>
                                             <TextField
                                                 className={textField}
-                                                defaultValue="SE LLENA AUTOMÁTICAMENTE"
+                                                defaultValue={vacante.nombre}
                                                 variant="outlined"
                                                 fullWidth
                                                 color="secondary"
@@ -179,6 +209,7 @@ const Registro = () => {
                                                 variant="outlined"
                                                 fullWidth
                                                 color="secondary"
+                                                onChange={handleAplicante}
                                                 autoFocus
                                                 required
                                             />
@@ -197,6 +228,7 @@ const Registro = () => {
                                                 fullWidth
                                                 color="secondary"
                                                 required
+                                                onChange={handleTelefono}
                                                 type=""
                                                 InputProps={{
                                                     startAdornment: (
@@ -218,6 +250,7 @@ const Registro = () => {
                                             color="secondary"
                                             disableElevation
                                             size="large"
+                                            onClick={addAplicante}
                                             endIcon={<ArrowForwardIosIcon />}
                                         >
                                             <ButtonFont
