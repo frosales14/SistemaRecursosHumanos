@@ -7,6 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
 
+const NavLink = styled.a`
+    text-decoration: none;
+    width: 100%;
+`;
+
 const Title = styled(Typography)`
     font-family: Monserrat Bold;
     font-weight: 700;
@@ -80,14 +85,18 @@ const ListaAplicantes = () => {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    fullWidth
+                <NavLink
+                    href={`https://res.cloudinary.com/dgauerlpt/raw/upload/fl_attachment:cv/${params.row.URL}`}
                 >
-                    VER
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        fullWidth
+                    >
+                        VER
+                    </Button>
+                </NavLink>
             ),
         },
     ];
