@@ -164,6 +164,17 @@ const Puestos = () => {
             });
     };
 
+    const clickAplicar = (event, nombre, id) => {
+        console.log({ nombre, id });
+        localStorage.setItem(
+            'puesto_seleccionado',
+            JSON.stringify({
+                id,
+                nombre,
+            })
+        );
+    };
+
     useEffect(() => {
         getVacantes();
     }, []);
@@ -252,6 +263,13 @@ const Puestos = () => {
                                                     disableElevation
                                                     size="large"
                                                     fullWidth="true"
+                                                    onClick={(e) =>
+                                                        clickAplicar(
+                                                            e,
+                                                            puesto.nombre,
+                                                            puesto.id
+                                                        )
+                                                    }
                                                 >
                                                     <ButtonFont
                                                         className={textBoton}
