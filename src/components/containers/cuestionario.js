@@ -112,7 +112,7 @@ const Cuestionario = () => {
 
     const sendForm = () => {
         fetch(
-            `https://hr-server-js.herokuapp.com/add-puntuacion?nombre=${nombre}&puntuacion=${counter}&url='${images[0]}'`,
+            `https://hr-server-js.herokuapp.com/aplicantes/add-puntuacion?nombre=${nombre}&puntuacion=${counter}&url='${images[0]}'`,
             {
                 method: 'GET',
             }
