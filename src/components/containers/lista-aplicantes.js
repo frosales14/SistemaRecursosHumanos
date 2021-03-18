@@ -141,7 +141,7 @@ const ListaAplicantes = () => {
                             <DataGrid
                                 rows={aplicantes}
                                 columns={columns}
-                                pageSize={5}
+                                pageSize={10}
                                 autoHeight="true"
                                 disableSelectionOnClick="true"
                                 disableColumnMenu="true"
