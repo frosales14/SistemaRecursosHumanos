@@ -77,28 +77,28 @@ const ListaAplicantes = () => {
             headerAlign: 'center',
             align: 'center',
         },
-        {
-            field: 'cv',
-            headerClassName: 'headers',
-            headerName: 'CV',
-            flex: 1,
-            headerAlign: 'center',
-            align: 'center',
-            renderCell: (params) => (
-                <NavLink
-                    href={`https://res.cloudinary.com/dgauerlpt/raw/upload/fl_attachment:cv/${params.row.URL}`}
-                >
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        fullWidth
-                    >
-                        VER
-                    </Button>
-                </NavLink>
-            ),
-        },
+        // {
+        //     field: 'cv',
+        //     headerClassName: 'headers',
+        //     headerName: 'CV',
+        //     flex: 1,
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     renderCell: (params) => (
+        //         <NavLink
+        //             href={`https://res.cloudinary.com/dgauerlpt/raw/upload/fl_attachment:cv/${params.row.URL}`}
+        //         >
+        //             <Button
+        //                 variant="contained"
+        //                 color="secondary"
+        //                 size="small"
+        //                 fullWidth
+        //             >
+        //                 VER
+        //             </Button>
+        //         </NavLink>
+        //     ),
+        // },
     ];
 
     const baseUrl =

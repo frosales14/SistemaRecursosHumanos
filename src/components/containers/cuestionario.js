@@ -5,16 +5,22 @@ import {
     FormControl,
     Select,
     MenuItem,
+    Snackbar,
 } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Layout from '../components/layout';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 
 import { CloudinaryContext, Image } from 'cloudinary-react';
 import { fetchPhotos, openUploadWidget } from '../../CloudinaryService';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variante="filled" {...props} />;
+}
 
 const NavLink = styled.a`
     text-decoration: none;
@@ -93,6 +99,7 @@ const Cuestionario = () => {
     const [cuestionario, setCuestionario] = useState([]);
     const [counter, setCounter] = useState(0);
     const [currentAplicante, setCurrentAplicante] = useState([]);
+    const [succesfull, setSuccesfull] = useState(false);
 
     let contador = 0;
 
@@ -111,6 +118,7 @@ const Cuestionario = () => {
     const vacante = JSON.parse(localStorage.getItem('puesto_seleccionado'));
 
     const sendForm = () => {
+        setSuccesfull(true);
         fetch(
             `https://hr-server-js.herokuapp.com/aplicantes/add-puntuacion?nombre=${nombre}&puntuacion=${counter}&url='${images[0]}'`,
             {
@@ -154,6 +162,13 @@ const Cuestionario = () => {
         getCuestionario();
         getCurrentAplicante();
     }, []);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccesfull(false);
+    };
 
     const [images, setImages] = useState([]);
 
@@ -293,6 +308,13 @@ const Cuestionario = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Snackbar
+                    open={succesfull}
+                    autoHideDuration={4000}
+                    onClose={handleClose}
+                >
+                    <Alert severity="success">Cuestionario Enviado</Alert>
+                </Snackbar>
             </Container>
         </Layout>
     );
