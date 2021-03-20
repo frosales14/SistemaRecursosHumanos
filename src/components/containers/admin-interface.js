@@ -37,20 +37,17 @@ const AdminInterface = () => {
         <Layout>
             <Container fixed madWidth="xl">
                 <Grid container direction="row" alignItems="center" spacing={3}>
-                    <Grid item xs={12} sm={4} md={4}>
+                    <Grid item xs={12} sm={4} md={6}>
                         <NavLink href="/creacion-vacantes">
                             <AdminButton>
                                 Publicar Oportunidades Laborales
                             </AdminButton>
                         </NavLink>
                     </Grid>
-                    <Grid item xs={12} sm={4} md={4}>
+                    <Grid item xs={12} sm={4} md={6}>
                         <NavLink href="/lista-aplicantes">
                             <AdminButton>Ver Aplicantes</AdminButton>
                         </NavLink>
-                    </Grid>
-                    <Grid item xs={12} sm={4} md={4}>
-                        <AdminButton>Administrar Plazas Existentes</AdminButton>
                     </Grid>
                 </Grid>
             </Container>
